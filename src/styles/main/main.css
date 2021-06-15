@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,900;1,900&display=swap");
+.navbar-light {
+  border-bottom: solid 0.1rem #86A8FF;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #86A8FF;
+}
+
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+  color: #bde7f0;
+}
+
+.navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .show > .nav-link {
+  color: #7BCFE1;
+}
+
+.navbar-dark .navbar-nav .nav-link.active:focus, .navbar-dark .navbar-nav .nav-link.active:hover, .navbar-dark .navbar-nav .show > .nav-link:focus, .navbar-dark .navbar-nav .show > .nav-link:hover {
+  color: #bde7f0;
+}
+
+.my-icon {
+  color: inherit;
+  position: relative;
+  display: inline-block;
+  min-width: 1.2em;
+  min-height: 1.2em;
+  top: -.15em;
+}
+
+.icon-happy {
+  top: .25em;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../../assets/icons/happy.svg");
+}
+
+/* =============
+  MAIN STYLES
+=============== */
+.border-white {
+  border-color: white !important;
+}
+
+#asrs-logo {
+  color: #0F618A;
+  min-height: 10rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* =============
+  TEXT
+=============== */
+body {
+  font-family: 'Lato', sans-serif !important;
+  color: #2E3A59;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lato', sans-serif !important;
+  font-weight: 700;
+}
+
+.navbar-nav {
+  font-weight: 700 !important;
+}
+
+/* =============
+  LAYOUT
+=============== */
+section {
+  padding-top: 30px;
+  margin-top: -30px;
+}
+
+body {
+  position: relative;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  padding-top: 56px;
+}
+
+.sidebar .accordion-item, .sidebar .accordion-header, .sidebar .accordion-button {
+  background: transparent !important;
+  color: inherit;
+}
+
+.sidebar .accordion-button:not(.collapsed) {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+#test-properties {
+  background-color: transparent;
+}
+
+#test-properties .title {
+  color: #ADBBE1;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: normal;
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: 1em;
+}
+
+#test-properties .accordion-button:hover, #test-properties h4:hover {
+  color: #3153aa;
+}
+
+.main-content {
+  padding: 0 1rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .main-content {
+    padding: 0 2rem;
+  }
+}
+
+.results-container {
+  min-height: 75vh;
+}
+
+/* =================
+  FORMULARZ
+==================== */
+.asrs-form-list li {
+  font-style: italic;
+}
+
+#main-content .asrs-form-row {
+  font-style: italic;
+  margin-bottom: .5em;
+}
+
+#main-content .asrs-form-row p {
+  margin-bottom: 0;
+}
+
+.asrs-radio-group {
+  font-size: 1.1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  margin-left: auto;
+}
+
+.my-radio-button {
+  display: inline-block;
+  position: relative;
+  padding: 0 6px;
+}
+
+.my-radio-button input[type='radio'] {
+  display: none;
+}
+
+.my-radio-button label {
+  color: #2E3A59;
+  font-weight: normal;
+}
+
+.my-radio-button label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin: 0 5px 0 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  border: 2px solid #2E3A59;
+  background-color: transparent;
+}
+
+.my-radio-button input:checked + label {
+  color: #1b5e00;
+  font-weight: bold;
+}
+
+.my-radio-button input:checked + label:after {
+  border-radius: 11px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 9px;
+  left: 10px;
+  content: " ";
+  display: block;
+  background: #30a800;
+}
+
+.my-radio-button input:checked + label:before {
+  border: 2px solid #30a800;
+}
+
+/* */
+/*# sourceMappingURL=main.css.map */

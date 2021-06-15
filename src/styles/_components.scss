@@ -1,0 +1,167 @@
+
+$markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
+.sidebar {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $markul-color-sidebar;
+  // border-right: solid .1rem $markul-color-primaryLight;
+  padding-top: 56px;
+  .accordion-item, .accordion-header, .accordion-button {
+    background: transparent !important;
+    color: inherit;
+  }
+  .accordion-button:not(.collapsed) {
+    box-shadow: none !important;
+  }
+}
+
+
+#test-properties {
+  background-color: transparent;
+  .title {
+    color: $markul-color-primaryLight;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: normal;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: 1em;
+  }
+
+  .accordion-button, h4 {
+    &:hover {
+      color: $markul-color-primaryDark-hover;
+    }
+  }
+  
+}
+
+
+.main-content {
+  padding: 0 1rem;    
+  @media screen and (min-width: 1000px) {
+    padding: 0 2rem;    
+  } 
+}
+
+
+.results-container {
+  min-height: 75vh;
+}
+
+
+/* =================
+  FORMULARZ
+==================== */ 
+
+.asrs-form-list {
+  li {
+    font-style: italic;
+  }
+}
+
+#main-content {
+  .asrs-form-row {
+    font-style: italic;
+    margin-bottom: .5em;
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  
+  
+}
+
+
+.asrs-radio-group {
+  font-size: 1.1rem;
+  display: flex;
+  flex-wrap: nowrap;
+  max-width: max-content;
+  margin-left: auto;
+  // ..................
+  // WERSJA 1
+  // ..................
+  // .my-radio-button {
+  //   display: flex;
+  //   flex-direction: row;
+  //   justify-content: center;
+  //   margin-left: .8em;
+  //   input {
+  //     width: 1.25rem;
+  //     height: 1.25rem;
+  //   }      
+  //   label {
+  //     margin-left: .25em;
+  //   }
+  // }
+}
+
+// ..................
+// WERSJA 2
+// ..................
+
+
+.my-radio-button {
+  display: inline-block;
+  position: relative;
+  padding: 0 6px;
+  // margin: 10px 0 0;
+}
+
+
+// SINGLE RADIO BUTTON
+$color-radioButtonChecked:  rgb(48, 168, 0);  // $markul-color-secondary
+$color-labelButtonChecked: rgb(27, 94, 0); 
+.my-radio-button input[type='radio'] {
+  display: none;
+}
+
+
+.my-radio-button label {
+  color: $markul-color-primaryDark;
+  font-weight: normal;
+}
+
+.my-radio-button label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin: 0 5px 0 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  border: 2px solid  $markul-color-primaryDark;
+  background-color: transparent;
+}
+
+.my-radio-button input:checked { // [type=radio]
+  + label {
+    color: $color-labelButtonChecked;
+    font-weight: bold;
+    &:after {
+      border-radius: 11px;
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      top: 9px;
+      left: 10px;
+      content: " ";
+      display: block;
+      background: $color-radioButtonChecked;
+    }    
+    &:before {
+      border: 2px solid $color-radioButtonChecked;
+    }
+  }  
+}
+/* */ 
+
+
+
