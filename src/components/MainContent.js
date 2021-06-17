@@ -1,5 +1,6 @@
 import {html} from 'lit-html'
 
+// onclick="window.ASRS.Form.ClickRouter(event)"
 
 const RadioGroup = (name = "name", number = 0, question = "Pytanie") => {
   return(html`
@@ -8,23 +9,23 @@ const RadioGroup = (name = "name", number = 0, question = "Pytanie") => {
         <p class="asrs-question col">${question}</p>
         <div class="asrs-radio-group col" id="${name}" radio-group-index="${number}" >
           <div class="my-radio-button">
-            <input class="" type="radio" name="${name}" id="${name}-0" value="0" onclick="window.ASRS.Form.Update(event)">
+            <input class="" type="radio" name="${name}" id="${name}-0" value="0" onclick="">
             <label class="" for="${name}-0" >0</label>
           </div>      
           <div class="my-radio-button">
-            <input class="" type="radio" name="${name}" id="${name}-1" value="1" onclick="window.ASRS.Form.Update(event)">
+            <input class="" type="radio" name="${name}" id="${name}-1" value="1" onclick="">
             <label class="" for="${name}-1">1</label>
           </div>
           <div class="my-radio-button">
-            <input class="" type="radio" name="${name}" id="${name}-2" value="2" onclick="window.ASRS.Form.Update(event)">
+            <input class="" type="radio" name="${name}" id="${name}-2" value="2" onclick="">
             <label class="" for="${name}-2">2</label>
           </div>
           <div class="my-radio-button">
-            <input class="" type="radio" name="${name}" id="${name}-3" value="3" onclick="window.ASRS.Form.Update(event)">
+            <input class="" type="radio" name="${name}" id="${name}-3" value="3" onclick="">
             <label class="" for="${name}-3">3</label>
           </div>
           <div class="my-radio-button">
-            <input class="" type="radio" name="${name}" id="${name}-4" value="4" onclick="window.ASRS.Form.Update(event)">
+            <input class="" type="radio" name="${name}" id="${name}-4" value="4" onclick="">
             <label class="" for="${name}-4">4</label>
           </div>
         </div>
@@ -54,13 +55,17 @@ const MainContent = () => {
   const template = html`
   <section id="test" >
     <div class="asrs-form-container container shadow border  rounded-3 p-5 mt-5">
-      <h1>Formularz</h1>    
-      <ol class="asrs-form-list" id="form70">
-        ${AsrsForm70}
-      </ol>
-      <ol class="asrs-form-list d-none" id="form71">
-        ${AsrsForm71}
-      </ol>
+      <h1>Formularz</h1>   
+      <form action="" name="asrs-form" >
+        <ol class="asrs-form-list" id="form70">
+          ${AsrsForm70}
+        </ol>
+      </form> 
+      <form action="" name="asrs-form" >
+        <ol class="asrs-form-list d-none" id="form71">
+          ${AsrsForm71}
+        </ol>
+      </form>
     </div>
   </section>
   <section id="wyniki" >

@@ -9928,6 +9928,11 @@ module.exports["default"] = module.exports, module.exports.__esModule = true;
 },{}],"../src/asrsEvents.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.appTests = exports.addEvents = void 0;
+
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
@@ -9942,9 +9947,9 @@ function _classCheckPrivateStaticAccess(receiver, classConstructor) { if (receiv
 
 function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
 
-window.ASRS = {};
-
-window.ASRS.getRandomValue = function () {
+// import TestSolver from './TestSolver'
+// window.ASRS = {}
+var getRandomValue = function getRandomValue() {
   var lower = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   var upper = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
   return Math.floor(Math.random() * (upper - lower + 1)) + lower;
@@ -9956,6 +9961,24 @@ var Form = /*#__PURE__*/function () {
   }
 
   (0, _createClass2.default)(Form, null, [{
+    key: "ClickRouter",
+    value: function ClickRouter(event) {
+      // https://www.designcise.com/web/tutorial/how-to-get-a-parent-form-element-from-a-child-input-element-using-javascript
+      if (event.target.form.name === "asrs-form") {
+        this.Update(event);
+      } else if (event.target.form.name === "asrs-properties") {
+        this.SetProps(event);
+      }
+
+      if (_classStaticPrivateFieldSpecGet(this, Form, _properties).filledQuestions) {
+        this.Interpreter();
+      }
+      /* STEPS:
+        2. check if form is fullfilled
+      */
+
+    }
+  }, {
     key: "SetFormValues",
     value: function SetFormValues() {
       var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -9964,7 +9987,7 @@ var Form = /*#__PURE__*/function () {
 
       if (random === true) {
         for (var i = 0; i < number; i++) {
-          values.push(window.ASRS.getRandomValue());
+          values.push(getRandomValue());
         }
       }
 
@@ -10074,9 +10097,17 @@ var Form = /*#__PURE__*/function () {
 
       console.log("Form: ", _classStaticPrivateFieldSpecGet(this, Form, _formValues));
     }
+  }, {
+    key: "Interpreter",
+    value: function Interpreter() {}
   }]);
   return Form;
-}();
+}(); // window.ASRS.Form = Form;
+
+/*
+window.ASRS.Form.SetFormValues([], true)
+*/
+
 
 var _formsAttributes = {
   writable: true,
@@ -10102,10 +10133,27 @@ var _formValues = {
   writable: true,
   value: new Array(71)
 };
-window.ASRS.Form = Form;
-/*
-window.ASRS.Form.SetFormValues([], true)
-*/
+
+var addEvents = function addEvents() {
+  var forms = document.querySelectorAll("form"); // const clickFunction = 
+
+  forms.forEach(function (form) {
+    var inputsAll = form.querySelectorAll("input");
+    inputsAll.forEach(function (input) {
+      input.addEventListener("click", function (event) {
+        Form.ClickRouter(event);
+      });
+    });
+  });
+};
+
+exports.addEvents = addEvents;
+
+var appTests = function appTests() {
+  Form.SetFormValues([], true);
+};
+
+exports.appTests = appTests;
 },{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js"}],"../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js":[function(require,module,exports) {
 function _taggedTemplateLiteral(strings, raw) {
   if (!raw) {
@@ -10240,7 +10288,7 @@ var AccordionItem = {
 var TestProps = function TestProps() {
   var name1 = "props-age-group";
   var name2 = "props-filling-person";
-  var template = (0, _litHtml.html)(_templateObject2 || (_templateObject2 = (0, _taggedTemplateLiteral2.default)(["\n    <div id=\"test-properties\">\n      <h2 class=\"title border-bottom py-5 my-0\">Ustawienia Testu</h2>\n      <div class=\"accordion\">\n        ", "\n        ", "\n      </div>\n    </div>\n    \n  "])), AccordionItem.render((0, _litHtml.html)(_templateObject3 || (_templateObject3 = (0, _taggedTemplateLiteral2.default)(["", " Grupa Wiekowa"])), _Icons.HappySVG), (0, _litHtml.html)(_templateObject4 || (_templateObject4 = (0, _taggedTemplateLiteral2.default)(["\n            <div class=\"d-flex flex-column\" id=\"", "\" asrs-prop-name=\"", "\" >\n              <div class=\"my-radio-button\">\n                <input type=\"radio\" name=\"", "\" id=\"", "-2-5\" value=\"2-5\" onclick=\"window.ASRS.Form.SetProps(event)\" checked>\n                <label for=\"", "-2-5\" >2-5 lat</label>\n              </div>                  \n              <div class=\"my-radio-button\">\n                <input type=\"radio\" name=\"", "\" id=\"", "-6-11\" value=\"6-11\" onclick=\"window.ASRS.Form.SetProps(event)\">\n                <label for=\"", "-6-11\" >6-11 lat</label>\n              </div>                  \n              <div class=\"my-radio-button\">\n                <input type=\"radio\" name=\"", "\" id=\"", "-12-18\" value=\"12-18\" onclick=\"window.ASRS.Form.SetProps(event)\">\n                <label for=\"", "-12-18\" >12-18 lat</label>\n              </div>                  \n            </div>\n          "])), name1, name1, name1, name1, name1, name1, name1, name1, name1, name1, name1)), AccordionItem.render((0, _litHtml.html)(_templateObject5 || (_templateObject5 = (0, _taggedTemplateLiteral2.default)(["", " Wype\u0142niaj\u0105cy"])), _Icons.GroupAltSVG), (0, _litHtml.html)(_templateObject6 || (_templateObject6 = (0, _taggedTemplateLiteral2.default)(["\n            <div class=\"d-flex flex-column\" id=\"", "\"  asrs-prop-name=\"", "\" >\n              <div class=\"my-radio-button\">\n                <input type=\"radio\" name=\"", "\" id=\"", "-parent\" value=\"parent\" onclick=\"window.ASRS.Form.SetProps(event)\" checked>\n                <label for=\"", "-parent\" >Rodzic</label>\n              </div>                  \n              <div class=\"my-radio-button\">\n                <input type=\"radio\" name=\"", "\" id=\"", "-teacher\" value=\"teacher\" onclick=\"window.ASRS.Form.SetProps(event)\">\n                <label for=\"", "-teacher\" >Opiekun</label>\n              </div>                                 \n            </div>\n          "])), name2, name2, name2, name2, name2, name2, name2, name2)));
+  var template = (0, _litHtml.html)(_templateObject2 || (_templateObject2 = (0, _taggedTemplateLiteral2.default)(["\n    <div id=\"test-properties\">\n      <h2 class=\"title border-bottom py-5 my-0\">Ustawienia Testu</h2>\n      <form action=\"\" name=\"asrs-properties\" >\n        <div class=\"accordion\">\n          ", "\n          ", "\n        </div>\n      </form>\n    </div>\n    \n  "])), AccordionItem.render((0, _litHtml.html)(_templateObject3 || (_templateObject3 = (0, _taggedTemplateLiteral2.default)(["", " Grupa Wiekowa"])), _Icons.HappySVG), (0, _litHtml.html)(_templateObject4 || (_templateObject4 = (0, _taggedTemplateLiteral2.default)(["\n              <div class=\"d-flex flex-column\" id=\"", "\" asrs-prop-name=\"", "\" >\n                <div class=\"my-radio-button\">\n                  <input type=\"radio\" name=\"", "\" id=\"", "-2-5\" value=\"2-5\" onclick=\"\" checked>\n                  <label for=\"", "-2-5\" >2-5 lat</label>\n                </div>                  \n                <div class=\"my-radio-button\">\n                  <input type=\"radio\" name=\"", "\" id=\"", "-6-11\" value=\"6-11\" onclick=\"\">\n                  <label for=\"", "-6-11\" >6-11 lat</label>\n                </div>                  \n                <div class=\"my-radio-button\">\n                  <input type=\"radio\" name=\"", "\" id=\"", "-12-18\" value=\"12-18\" onclick=\"\">\n                  <label for=\"", "-12-18\" >12-18 lat</label>\n                </div>                  \n              </div>\n            "])), name1, name1, name1, name1, name1, name1, name1, name1, name1, name1, name1)), AccordionItem.render((0, _litHtml.html)(_templateObject5 || (_templateObject5 = (0, _taggedTemplateLiteral2.default)(["", " Wype\u0142niaj\u0105cy"])), _Icons.GroupAltSVG), (0, _litHtml.html)(_templateObject6 || (_templateObject6 = (0, _taggedTemplateLiteral2.default)(["\n              <div class=\"d-flex flex-column\" id=\"", "\"  asrs-prop-name=\"", "\" >\n                <div class=\"my-radio-button\">\n                  <input type=\"radio\" name=\"", "\" id=\"", "-parent\" value=\"parent\" onclick=\"\" checked>\n                  <label for=\"", "-parent\" >Rodzic</label>\n                </div>                  \n                <div class=\"my-radio-button\">\n                  <input type=\"radio\" name=\"", "\" id=\"", "-teacher\" value=\"teacher\" onclick=\"\">\n                  <label for=\"", "-teacher\" >Opiekun</label>\n                </div>                                 \n              </div>\n            "])), name2, name2, name2, name2, name2, name2, name2, name2)));
   return template;
 };
 
@@ -10262,11 +10310,12 @@ var _templateObject, _templateObject2;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// onclick="window.ASRS.Form.ClickRouter(event)"
 var RadioGroup = function RadioGroup() {
   var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "name";
   var number = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var question = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Pytanie";
-  return (0, _litHtml.html)(_templateObject || (_templateObject = (0, _taggedTemplateLiteral2.default)(["\n    <li>\n      <div class=\"row asrs-form-row\">\n        <p class=\"asrs-question col\">", "</p>\n        <div class=\"asrs-radio-group col\" id=\"", "\" radio-group-index=\"", "\" >\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-0\" value=\"0\" onclick=\"window.ASRS.Form.Update(event)\">\n            <label class=\"\" for=\"", "-0\" >0</label>\n          </div>      \n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-1\" value=\"1\" onclick=\"window.ASRS.Form.Update(event)\">\n            <label class=\"\" for=\"", "-1\">1</label>\n          </div>\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-2\" value=\"2\" onclick=\"window.ASRS.Form.Update(event)\">\n            <label class=\"\" for=\"", "-2\">2</label>\n          </div>\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-3\" value=\"3\" onclick=\"window.ASRS.Form.Update(event)\">\n            <label class=\"\" for=\"", "-3\">3</label>\n          </div>\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-4\" value=\"4\" onclick=\"window.ASRS.Form.Update(event)\">\n            <label class=\"\" for=\"", "-4\">4</label>\n          </div>\n        </div>\n      </div>\n    </li>\n    \n  "])), question, name, number, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name);
+  return (0, _litHtml.html)(_templateObject || (_templateObject = (0, _taggedTemplateLiteral2.default)(["\n    <li>\n      <div class=\"row asrs-form-row\">\n        <p class=\"asrs-question col\">", "</p>\n        <div class=\"asrs-radio-group col\" id=\"", "\" radio-group-index=\"", "\" >\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-0\" value=\"0\" onclick=\"\">\n            <label class=\"\" for=\"", "-0\" >0</label>\n          </div>      \n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-1\" value=\"1\" onclick=\"\">\n            <label class=\"\" for=\"", "-1\">1</label>\n          </div>\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-2\" value=\"2\" onclick=\"\">\n            <label class=\"\" for=\"", "-2\">2</label>\n          </div>\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-3\" value=\"3\" onclick=\"\">\n            <label class=\"\" for=\"", "-3\">3</label>\n          </div>\n          <div class=\"my-radio-button\">\n            <input class=\"\" type=\"radio\" name=\"", "\" id=\"", "-4\" value=\"4\" onclick=\"\">\n            <label class=\"\" for=\"", "-4\">4</label>\n          </div>\n        </div>\n      </div>\n    </li>\n    \n  "])), question, name, number, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name);
 };
 
 var AsrsForm70 = [];
@@ -10284,7 +10333,7 @@ for (var _index = 0; _index < 71; _index++) {
 }
 
 var MainContent = function MainContent() {
-  var template = (0, _litHtml.html)(_templateObject2 || (_templateObject2 = (0, _taggedTemplateLiteral2.default)(["\n  <section id=\"test\" >\n    <div class=\"asrs-form-container container shadow border  rounded-3 p-5 mt-5\">\n      <h1>Formularz</h1>    \n      <ol class=\"asrs-form-list\" id=\"form70\">\n        ", "\n      </ol>\n      <ol class=\"asrs-form-list d-none\" id=\"form71\">\n        ", "\n      </ol>\n    </div>\n  </section>\n  <section id=\"wyniki\" >\n    <div  class=\"results-container my-5 container shadow border  rounded-3 p-5\">\n      <h1>Wyniki</h1>    \n      <div class=\"results\">\n        <p class=\"fst-italic fs-5\">Kiedy wype\u0142nisz formularz, wyniki pojawi\u0105 si\u0119 tutaj</p>\n      </div>\n    </div>\n  </section>\n  <section id=\"app-info\" >\n    <div  class=\"results-container my-5 container shadow border  rounded-3 p-5\">\n      <h1>Info</h1>    \n      <div class=\"app-info\">\n        <p class=\"fst-italic fs-5\">Tutaj wpisz informacje na temat aplikacji</p>\n      </div>\n    </div>\n  </section>\n\n  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ullam quisquam cumque alias odit tempore mollitia accusamus illo suscipit sapiente recusandae molestias modi officiis nam magni cum voluptatem voluptatibus, molestiae consequatur labore corporis! Vero perferendis quibusdam consequatur rem porro asperiores unde, eius ad recusandae cumque iusto inventore quos iure illum molestias dolore maxime, placeat maiores sed aspernatur pariatur reiciendis aliquam quam facilis? Ex sit minima ab et similique eaque. Aut aliquid quaerat laudantium ipsam exercitationem perferendis nam, odit sequi! Commodi dolor amet ullam minima ipsum, iusto quos corrupti dolore eum laborum, voluptas in nostrum cupiditate! Esse odit qui facere fugiat dolorem accusantium dolore blanditiis veritatis laudantium, deserunt quibusdam numquam iusto consequuntur iste doloremque enim eum dignissimos atque dolor? Distinctio, aspernatur sint asperiores voluptate natus atque quaerat, ratione quos nemo accusamus non delectus consequatur fugiat repudiandae. Delectus eum saepe fugit incidunt libero ea asperiores. Provident, eaque pariatur dicta corporis voluptate eveniet accusamus! Maiores tempore reprehenderit magni, nisi porro a necessitatibus veritatis reiciendis iste quis quas quam laboriosam dolore accusantium voluptate, asperiores quod assumenda possimus sit veniam itaque nulla ipsam fugiat. Eaque eum dignissimos aliquid, reiciendis fugiat beatae in? Rerum, repudiandae ducimus dolores id quam provident consequatur fuga non earum vitae dolorum dolorem vel possimus harum officiis est exercitationem suscipit cupiditate delectus doloribus maiores. Excepturi, libero! Alias repudiandae laborum tempore repellat vero fugiat possimus, ipsa neque, suscipit voluptatibus, eos voluptatum quasi ducimus nobis ut! Doloribus aut labore quaerat, dolor velit hic numquam architecto harum incidunt dolores est voluptates. Minima, cupiditate veniam? Impedit nobis eius minima ullam, explicabo error animi. Magni voluptatibus voluptas quidem dolorum adipisci eum optio aperiam eos magnam ipsa doloremque nemo nostrum dolore enim minima possimus debitis hic a quaerat voluptates placeat blanditiis, est inventore. Quasi aspernatur labore accusantium cumque asperiores. Accusamus totam esse impedit unde, voluptatum, omnis cumque libero et soluta molestiae officiis rerum voluptatibus quia facilis ipsam nobis alias deleniti quis quos velit quidem expedita. Doloremque eos id, adipisci libero mollitia voluptate! Quibusdam quam numquam provident! Fuga velit possimus ipsa ducimus ratione temporibus, consectetur, doloribus quidem maxime numquam eaque accusantium illum voluptas tenetur, beatae dicta nesciunt iusto! Recusandae aperiam optio quod deserunt praesentium odit at laborum! Voluptates obcaecati at maxime impedit amet natus sapiente qui odio enim. Magnam quam modi porro facere. Recusandae, accusantium? Dignissimos in repudiandae eligendi rerum voluptatem repellendus dolorum tempora libero illum iure, ex hic commodi iusto, odit, sed dolorem magni porro quisquam voluptates quam. Doloribus sapiente cum aut assumenda rem officia adipisci voluptatem, exercitationem culpa officiis nam, enim error odit incidunt qui tempora non eligendi nihil blanditiis laborum omnis quae mollitia iure at. Officia, eveniet nulla delectus facilis architecto accusantium, tempora omnis culpa sapiente tempore nihil nisi cumque iusto consequuntur aut exercitationem! Ad excepturi maxime veniam molestias ut quis porro tenetur mollitia tempora, necessitatibus consectetur sapiente facilis officia animi architecto incidunt obcaecati doloribus repellat aliquid, quasi hic voluptates assumenda. Quas dolorem et, aliquam aperiam beatae corporis ex? Tempora, quas ullam, rerum facilis doloribus commodi odit, labore eius temporibus enim ut voluptas officia neque recusandae.</p>\n\n  "])), AsrsForm70, AsrsForm71);
+  var template = (0, _litHtml.html)(_templateObject2 || (_templateObject2 = (0, _taggedTemplateLiteral2.default)(["\n  <section id=\"test\" >\n    <div class=\"asrs-form-container container shadow border  rounded-3 p-5 mt-5\">\n      <h1>Formularz</h1>   \n      <form action=\"\" name=\"asrs-form\" >\n        <ol class=\"asrs-form-list\" id=\"form70\">\n          ", "\n        </ol>\n      </form> \n      <form action=\"\" name=\"asrs-form\" >\n        <ol class=\"asrs-form-list d-none\" id=\"form71\">\n          ", "\n        </ol>\n      </form>\n    </div>\n  </section>\n  <section id=\"wyniki\" >\n    <div  class=\"results-container my-5 container shadow border  rounded-3 p-5\">\n      <h1>Wyniki</h1>    \n      <div class=\"results\">\n        <p class=\"fst-italic fs-5\">Kiedy wype\u0142nisz formularz, wyniki pojawi\u0105 si\u0119 tutaj</p>\n      </div>\n    </div>\n  </section>\n  <section id=\"app-info\" >\n    <div  class=\"results-container my-5 container shadow border  rounded-3 p-5\">\n      <h1>Info</h1>    \n      <div class=\"app-info\">\n        <p class=\"fst-italic fs-5\">Tutaj wpisz informacje na temat aplikacji</p>\n      </div>\n    </div>\n  </section>\n\n  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ullam quisquam cumque alias odit tempore mollitia accusamus illo suscipit sapiente recusandae molestias modi officiis nam magni cum voluptatem voluptatibus, molestiae consequatur labore corporis! Vero perferendis quibusdam consequatur rem porro asperiores unde, eius ad recusandae cumque iusto inventore quos iure illum molestias dolore maxime, placeat maiores sed aspernatur pariatur reiciendis aliquam quam facilis? Ex sit minima ab et similique eaque. Aut aliquid quaerat laudantium ipsam exercitationem perferendis nam, odit sequi! Commodi dolor amet ullam minima ipsum, iusto quos corrupti dolore eum laborum, voluptas in nostrum cupiditate! Esse odit qui facere fugiat dolorem accusantium dolore blanditiis veritatis laudantium, deserunt quibusdam numquam iusto consequuntur iste doloremque enim eum dignissimos atque dolor? Distinctio, aspernatur sint asperiores voluptate natus atque quaerat, ratione quos nemo accusamus non delectus consequatur fugiat repudiandae. Delectus eum saepe fugit incidunt libero ea asperiores. Provident, eaque pariatur dicta corporis voluptate eveniet accusamus! Maiores tempore reprehenderit magni, nisi porro a necessitatibus veritatis reiciendis iste quis quas quam laboriosam dolore accusantium voluptate, asperiores quod assumenda possimus sit veniam itaque nulla ipsam fugiat. Eaque eum dignissimos aliquid, reiciendis fugiat beatae in? Rerum, repudiandae ducimus dolores id quam provident consequatur fuga non earum vitae dolorum dolorem vel possimus harum officiis est exercitationem suscipit cupiditate delectus doloribus maiores. Excepturi, libero! Alias repudiandae laborum tempore repellat vero fugiat possimus, ipsa neque, suscipit voluptatibus, eos voluptatum quasi ducimus nobis ut! Doloribus aut labore quaerat, dolor velit hic numquam architecto harum incidunt dolores est voluptates. Minima, cupiditate veniam? Impedit nobis eius minima ullam, explicabo error animi. Magni voluptatibus voluptas quidem dolorum adipisci eum optio aperiam eos magnam ipsa doloremque nemo nostrum dolore enim minima possimus debitis hic a quaerat voluptates placeat blanditiis, est inventore. Quasi aspernatur labore accusantium cumque asperiores. Accusamus totam esse impedit unde, voluptatum, omnis cumque libero et soluta molestiae officiis rerum voluptatibus quia facilis ipsam nobis alias deleniti quis quos velit quidem expedita. Doloremque eos id, adipisci libero mollitia voluptate! Quibusdam quam numquam provident! Fuga velit possimus ipsa ducimus ratione temporibus, consectetur, doloribus quidem maxime numquam eaque accusantium illum voluptas tenetur, beatae dicta nesciunt iusto! Recusandae aperiam optio quod deserunt praesentium odit at laborum! Voluptates obcaecati at maxime impedit amet natus sapiente qui odio enim. Magnam quam modi porro facere. Recusandae, accusantium? Dignissimos in repudiandae eligendi rerum voluptatem repellendus dolorum tempora libero illum iure, ex hic commodi iusto, odit, sed dolorem magni porro quisquam voluptates quam. Doloribus sapiente cum aut assumenda rem officia adipisci voluptatem, exercitationem culpa officiis nam, enim error odit incidunt qui tempora non eligendi nihil blanditiis laborum omnis quae mollitia iure at. Officia, eveniet nulla delectus facilis architecto accusantium, tempora omnis culpa sapiente tempore nihil nisi cumque iusto consequuntur aut exercitationem! Ad excepturi maxime veniam molestias ut quis porro tenetur mollitia tempora, necessitatibus consectetur sapiente facilis officia animi architecto incidunt obcaecati doloribus repellat aliquid, quasi hic voluptates assumenda. Quas dolorem et, aliquam aperiam beatae corporis ex? Tempora, quas ullam, rerum facilis doloribus commodi odit, labore eius temporibus enim ut voluptas officia neque recusandae.</p>\n\n  "])), AsrsForm70, AsrsForm71);
   return template;
 };
 
@@ -10322,7 +10371,359 @@ var Layout = function Layout() {
 
 var _default = Layout;
 exports.default = _default;
-},{"@babel/runtime/helpers/taggedTemplateLiteral":"../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","lit-html":"../node_modules/lit-html/lit-html.js","./Navbar":"../src/components/Navbar.js","./TestProps":"../src/components/TestProps.js","./MainContent":"../src/components/MainContent.js","../components/Icons":"../src/components/Icons.js"}],"../src/app.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/taggedTemplateLiteral":"../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","lit-html":"../node_modules/lit-html/lit-html.js","./Navbar":"../src/components/Navbar.js","./TestProps":"../src/components/TestProps.js","./MainContent":"../src/components/MainContent.js","../components/Icons":"../src/components/Icons.js"}],"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js":[function(require,module,exports) {
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+module.exports = _arrayLikeToArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
+var arrayLikeToArray = require("./arrayLikeToArray.js");
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+}
+
+module.exports = _arrayWithoutHoles;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{"./arrayLikeToArray.js":"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js"}],"../node_modules/@babel/runtime/helpers/iterableToArray.js":[function(require,module,exports) {
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],"../node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js":[function(require,module,exports) {
+var arrayLikeToArray = require("./arrayLikeToArray.js");
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+module.exports = _unsupportedIterableToArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{"./arrayLikeToArray.js":"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js"}],"../node_modules/@babel/runtime/helpers/nonIterableSpread.js":[function(require,module,exports) {
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+module.exports = _nonIterableSpread;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],"../node_modules/@babel/runtime/helpers/toConsumableArray.js":[function(require,module,exports) {
+var arrayWithoutHoles = require("./arrayWithoutHoles.js");
+
+var iterableToArray = require("./iterableToArray.js");
+
+var unsupportedIterableToArray = require("./unsupportedIterableToArray.js");
+
+var nonIterableSpread = require("./nonIterableSpread.js");
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{"./arrayWithoutHoles.js":"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray.js":"../node_modules/@babel/runtime/helpers/iterableToArray.js","./unsupportedIterableToArray.js":"../node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js","./nonIterableSpread.js":"../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],"../node_modules/@babel/runtime/helpers/classApplyDescriptorGet.js":[function(require,module,exports) {
+function _classApplyDescriptorGet(receiver, descriptor) {
+  if (descriptor.get) {
+    return descriptor.get.call(receiver);
+  }
+
+  return descriptor.value;
+}
+
+module.exports = _classApplyDescriptorGet;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],"../node_modules/@babel/runtime/helpers/classExtractFieldDescriptor.js":[function(require,module,exports) {
+function _classExtractFieldDescriptor(receiver, privateMap, action) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to " + action + " private field on non-instance");
+  }
+
+  return privateMap.get(receiver);
+}
+
+module.exports = _classExtractFieldDescriptor;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],"../node_modules/@babel/runtime/helpers/classPrivateFieldGet.js":[function(require,module,exports) {
+var classApplyDescriptorGet = require("./classApplyDescriptorGet.js");
+
+var classExtractFieldDescriptor = require("./classExtractFieldDescriptor.js");
+
+function _classPrivateFieldGet(receiver, privateMap) {
+  var descriptor = classExtractFieldDescriptor(receiver, privateMap, "get");
+  return classApplyDescriptorGet(receiver, descriptor);
+}
+
+module.exports = _classPrivateFieldGet;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{"./classApplyDescriptorGet.js":"../node_modules/@babel/runtime/helpers/classApplyDescriptorGet.js","./classExtractFieldDescriptor.js":"../node_modules/@babel/runtime/helpers/classExtractFieldDescriptor.js"}],"../src/developOnly/TestSolverRaw.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _classPrivateFieldGet2 = _interopRequireDefault(require("@babel/runtime/helpers/classPrivateFieldGet"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _properties = /*#__PURE__*/new WeakMap();
+
+var _template = /*#__PURE__*/new WeakMap();
+
+var _reverse = /*#__PURE__*/new WeakMap();
+
+var _scales = /*#__PURE__*/new WeakMap();
+
+var TestSolverRaw = /*#__PURE__*/function () {
+  function TestSolverRaw() {
+    /* 
+      args;
+      + questions values
+      + ageGroup
+      + fillingPerson
+        TODO: 
+      1. SET
+       + #properties
+       + 
+    */
+
+    (0, _classCallCheck2.default)(this, TestSolverRaw);
+
+    _properties.set(this, {
+      writable: true,
+      value: {
+        formType: undefined,
+        questionNumber: undefined,
+        ageGroup: undefined,
+        fillingPerson: undefined
+      }
+    });
+
+    _template.set(this, {
+      writable: true,
+      value: {
+        Age_2_5: {},
+        Age_6_11: {},
+        Age_12_18: {}
+      }
+    });
+
+    _reverse.set(this, {
+      writable: true,
+      value: {
+        // GRUPA 6-11 i 12-18 ma taki sam układ skal i odwracalność różni się tylko interpretacja wyników pomiędzy tymi grupami wiekowymi
+        form70: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        form71: [0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+      }
+    });
+
+    _scales.set(this, {
+      writable: true,
+      value: {
+        // !!OD SUROWYCH INDEKSÓW SKAL TRZEBA ODJAC 2
+        form70: {
+          RSK: ["2", "4", "5", "6", "8", "14:20", "22:23", "25:26", "29:31", "33:34", "36:37", "38:39", "41", "44:45", "55:56", "50:53", "58", "62:64", "68"],
+          NZ: ["3", "9:13", "21", "27:28", "40", "42:43", "46:49", "54", "57", "61", "65:66", "70:71"],
+          DSM: ["2", "4:6", "9:12", "14:15", "17", "19:22", "27", "29:30", "39:44", "48:49", "51:52", "54:55", "57", "62", "65:66", "71"],
+          RR: ["5", "16", "25", "31", "41", "50", "52", "53", "62"],
+          RD: ["22", "24", "32", "34", "45"],
+          WSE: ["2", "4", "6", "14", "15", "17", "20", "37", "39", "44", "51", "55"],
+          NJ: ["7", "23", "43", "60", "54", "71"],
+          ST: ["12", "40", "48", "65", "66", "69"],
+          SZ: ["9:11", "21", "28", "49", "57", "61"],
+          WS: ["3", "13", "46:47", "67", "70"],
+          US: ["18", "26", "33", "35", "38", "56", "58:59", "63:64"]
+        },
+        form71: {
+          RSK: ["4", "5", "9", "10", "13", "24", "29", "32", "33", "34", "40", "43", "44", "46", "56", "57", "62", "70", "71"],
+          NZ: ["3", "14", "18", "21", "22", "23", "25:28", "30", "39", "41", "47", "49:52", "55", "63", "64", "66", "68", "69"],
+          SR: ["2", "6:8", "17", "19", "31", "35:37", "45", "53", "58:59", "61", "67", "72"],
+          DSM: ["9:10", "12", "14", "16", "20:22", "24:25", "27", "29", "32:34", "38", "40", "43:44", "47", "49:52", "62", "64", "66", "68", "70:71"],
+          RR: ["4", "15", "20", "32", "46", "51", "65", "70:71"],
+          RD: ["19", "34:35", "38", "60", "67"],
+          WSE: ["5", "9:10", "12", "16", "29", "33", "40", "42:44", "56", "62"],
+          NJ: ["18", "21:22", "27", "59", "69"],
+          ST: ["47", "49", "54:55", "68"],
+          SZ: ["14", "23", "25", "41", "50", "52", "64", "66"],
+          WS: ["3", "26", "28", "30", "39", "63"],
+          UW: ["2", "6", "11", "17", "31", "35:36", "45", "48", "53", "58"]
+        }
+      }
+    });
+  }
+
+  (0, _createClass2.default)(TestSolverRaw, [{
+    key: "scales",
+    get: function get() {
+      return (0, _classPrivateFieldGet2.default)(this, _scales);
+    }
+  }]);
+  return TestSolverRaw;
+}(); //  ["RSK", "NZ", "DSM", "RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
+
+
+var _default = TestSolverRaw;
+exports.default = _default;
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/classPrivateFieldGet":"../node_modules/@babel/runtime/helpers/classPrivateFieldGet.js"}],"../src/developOnly/DataPreparation.js":[function(require,module,exports) {
+"use strict";
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _TestSolverRaw = _interopRequireDefault(require("./TestSolverRaw"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var testSolverRaw = new _TestSolverRaw.default(); // // https://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
+// function CloneObj(obj) {
+//   if (null == obj || "object" != typeof obj) return obj;
+//   var copy = obj.constructor();
+//   for (var attr in obj) {
+//       if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+//   }
+//   return copy;
+// }
+
+/** ShiftScales
+ * Przesunięcie indeksów Skal o -2 */
+
+var ShiftScales = function ShiftScales(ageVariant) {
+  var scales = _objectSpread({}, testSolverRaw.scales[ageVariant]);
+
+  var keys = Object.keys(scales); // console.log("\nSCALES NAMES\n", keys);
+  // console.log("SCALES BEFORE SHIFT \n", testSolverRaw.scales[ageVariant]);
+  // Klonowanie skal
+
+  for (var i = 0; i < keys.length; i++) {
+    scales[keys[i]] = (0, _toConsumableArray2.default)(testSolverRaw.scales[ageVariant][keys[i]]);
+  }
+
+  for (var _i = 0; _i < keys.length; _i++) {
+    var scale = scales[keys[_i]]; // console.log(scale);
+
+    for (var j = 0; j < scale.length; j++) {
+      var index = scale[j];
+
+      if (!isNaN(index)) {
+        scale[j] = (parseInt(index) - 2).toString();
+      } else {
+        // let index = ""
+        var nums = index.split(":").map(function (num) {
+          return parseInt(num) - 2;
+        });
+        scale[j] = nums.join(":");
+      }
+    }
+
+    scales[keys[_i]] = scale;
+  }
+
+  return scales;
+};
+
+var foldNicely = function foldNicely(prefix) {
+  var array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ["1", "2"];
+  var arrayLength = array.length.toString();
+  var addSpace = "  ";
+
+  for (var i = 0; i < arrayLength.length; i++) {
+    addSpace += " ";
+  }
+
+  var arrayStr = array.map(function (str) {
+    return "\"".concat(str, "\"");
+  }).join(', ');
+  return "".concat(prefix).concat(addSpace, "[").concat(arrayStr, "]");
+};
+
+var DisplayInOrder = function DisplayInOrder(object) {
+  var displayNice = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "\nSCALES AFTER SHIFT DISPLAYED IN ORDER";
+  console.log(title);
+
+  if (displayNice) {
+    var string = "";
+
+    for (var key in object) {
+      if (Object.hasOwnProperty.call(object, key)) {
+        var array = object[key];
+        var line = foldNicely("".concat(key, ": "), array);
+        string += "".concat(line, ",\n");
+      }
+    }
+
+    console.log(string);
+  } else {
+    for (var _key in object) {
+      if (Object.hasOwnProperty.call(object, _key)) {
+        var _array = object[_key];
+        console.log("".concat(_key, ": "), _array);
+      }
+    }
+  }
+}; // FUNCTION CALL
+
+
+window.ASRS_DATA_PREPARATION = function () {
+  var ageVariant = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "form70";
+  console.log(" ======================================================== ", "\n   ASRS DATA PREPARATION FOR VARIANT ".concat(ageVariant, "\n"), "======================================================== \n"); // const ageVariant = "form70";
+
+  var scalesShifted = ShiftScales(ageVariant);
+  console.log("\n\nScales ".concat(ageVariant, " BEFORE shift\n"), testSolverRaw.scales[ageVariant]); // console.log(`\n\nScales ${ageVariant} AFTER shift\n`, scalesShifted);
+
+  DisplayInOrder(testSolverRaw.scales[ageVariant], false, "\n\nScales ".concat(ageVariant, " BEFORE shift displayed in order\n")); // DisplayInOrder(scalesShifted, false)
+
+  DisplayInOrder(testSolverRaw.scales[ageVariant], true, "\n\nScales ".concat(ageVariant, " BEFORE shift displayed NICELY in order\n"));
+  DisplayInOrder(scalesShifted, true, "\n\nScales ".concat(ageVariant, " AFTER shift displayed in order (!SHOULD BE LIKE ABOVE MINUS 2)\n"));
+  console.log(" ======================================================== ", "\n   \t\t\t\t\t\tEND\n", "======================================================== \n\n\n\n");
+};
+
+window.ASRS_DATA_PREPARATION("form70");
+window.ASRS_DATA_PREPARATION("form71");
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","./TestSolverRaw":"../src/developOnly/TestSolverRaw.js"}],"../src/app.js":[function(require,module,exports) {
 "use strict";
 
 var _litHtml = require("lit-html");
@@ -10335,9 +10736,11 @@ var bootstrap = _interopRequireWildcard(require("bootstrap"));
 
 require("./styles/main/main.css");
 
-var _asrsEvents = _interopRequireDefault(require("./asrsEvents"));
+var _asrsEvents = require("./asrsEvents");
 
 var _Layout = _interopRequireDefault(require("./components/Layout"));
+
+require("./developOnly/DataPreparation");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10355,8 +10758,12 @@ var app = function app() {
 
 
 app();
+document.addEventListener("DOMContentLoaded", function () {
+  (0, _asrsEvents.addEvents)();
+  window.appTests = _asrsEvents.appTests; // new Form()
+});
 console.log("EOF");
-},{"lit-html":"../node_modules/lit-html/lit-html.js","./styles/start/start.css":"../src/styles/start/start.css","../node_modules/bootstrap/dist/css/bootstrap.min.css":"../node_modules/bootstrap/dist/css/bootstrap.min.css","bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.esm.js","./styles/main/main.css":"../src/styles/main/main.css","./asrsEvents":"../src/asrsEvents.js","./components/Layout":"../src/components/Layout.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"lit-html":"../node_modules/lit-html/lit-html.js","./styles/start/start.css":"../src/styles/start/start.css","../node_modules/bootstrap/dist/css/bootstrap.min.css":"../node_modules/bootstrap/dist/css/bootstrap.min.css","bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.esm.js","./styles/main/main.css":"../src/styles/main/main.css","./asrsEvents":"../src/asrsEvents.js","./components/Layout":"../src/components/Layout.js","./developOnly/DataPreparation":"../src/developOnly/DataPreparation.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10384,7 +10791,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55147" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57407" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

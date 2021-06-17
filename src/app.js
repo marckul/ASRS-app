@@ -8,8 +8,11 @@ import * as bootstrap from 'bootstrap';
 import './styles/main/main.css'
 
 
-import asrsEvents from './asrsEvents';
+import { addEvents, appTests } from './asrsEvents';
 import Layout from './components/Layout';
+
+// DEVELOPMENT ONLY
+import './developOnly/DataPreparation'
 
 
 
@@ -22,6 +25,12 @@ const app = () => {
 
 // Init App
 app();
+document.addEventListener("DOMContentLoaded", function(){
+  addEvents();
+  window.appTests = appTests;
+  // new Form()
+});
+
 
 
 

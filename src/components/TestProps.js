@@ -74,42 +74,44 @@ const TestProps = () => {
   const template = html`
     <div id="test-properties">
       <h2 class="title border-bottom py-5 my-0">Ustawienia Testu</h2>
-      <div class="accordion">
-        ${AccordionItem.render(
-          html`${HappySVG} Grupa Wiekowa`, 
-          html`
-            <div class="d-flex flex-column" id="${name1}" asrs-prop-name="${name1}" >
-              <div class="my-radio-button">
-                <input type="radio" name="${name1}" id="${name1}-2-5" value="2-5" onclick="window.ASRS.Form.SetProps(event)" checked>
-                <label for="${name1}-2-5" >2-5 lat</label>
-              </div>                  
-              <div class="my-radio-button">
-                <input type="radio" name="${name1}" id="${name1}-6-11" value="6-11" onclick="window.ASRS.Form.SetProps(event)">
-                <label for="${name1}-6-11" >6-11 lat</label>
-              </div>                  
-              <div class="my-radio-button">
-                <input type="radio" name="${name1}" id="${name1}-12-18" value="12-18" onclick="window.ASRS.Form.SetProps(event)">
-                <label for="${name1}-12-18" >12-18 lat</label>
-              </div>                  
-            </div>
-          `
-        )}
-        ${AccordionItem.render(
-          html`${GroupAltSVG} Wypełniający`, 
-          html`
-            <div class="d-flex flex-column" id="${name2}"  asrs-prop-name="${name2}" >
-              <div class="my-radio-button">
-                <input type="radio" name="${name2}" id="${name2}-parent" value="parent" onclick="window.ASRS.Form.SetProps(event)" checked>
-                <label for="${name2}-parent" >Rodzic</label>
-              </div>                  
-              <div class="my-radio-button">
-                <input type="radio" name="${name2}" id="${name2}-teacher" value="teacher" onclick="window.ASRS.Form.SetProps(event)">
-                <label for="${name2}-teacher" >Opiekun</label>
-              </div>                                 
-            </div>
-          `
-        )}
-      </div>
+      <form action="" name="asrs-properties" >
+        <div class="accordion">
+          ${AccordionItem.render(
+            html`${HappySVG} Grupa Wiekowa`, 
+            html`
+              <div class="d-flex flex-column" id="${name1}" asrs-prop-name="${name1}" >
+                <div class="my-radio-button">
+                  <input type="radio" name="${name1}" id="${name1}-2-5" value="2-5" onclick="" checked>
+                  <label for="${name1}-2-5" >2-5 lat</label>
+                </div>                  
+                <div class="my-radio-button">
+                  <input type="radio" name="${name1}" id="${name1}-6-11" value="6-11" onclick="">
+                  <label for="${name1}-6-11" >6-11 lat</label>
+                </div>                  
+                <div class="my-radio-button">
+                  <input type="radio" name="${name1}" id="${name1}-12-18" value="12-18" onclick="">
+                  <label for="${name1}-12-18" >12-18 lat</label>
+                </div>                  
+              </div>
+            `
+          )}
+          ${AccordionItem.render(
+            html`${GroupAltSVG} Wypełniający`, 
+            html`
+              <div class="d-flex flex-column" id="${name2}"  asrs-prop-name="${name2}" >
+                <div class="my-radio-button">
+                  <input type="radio" name="${name2}" id="${name2}-parent" value="parent" onclick="" checked>
+                  <label for="${name2}-parent" >Rodzic</label>
+                </div>                  
+                <div class="my-radio-button">
+                  <input type="radio" name="${name2}" id="${name2}-teacher" value="teacher" onclick="">
+                  <label for="${name2}-teacher" >Opiekun</label>
+                </div>                                 
+              </div>
+            `
+          )}
+        </div>
+      </form>
     </div>
     
   `

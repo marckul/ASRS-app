@@ -1,9 +1,7 @@
 
-// import TestSolver from './TestSolver'
+window.ASRS = {}
 
-// window.ASRS = {}
-
-const getRandomValue = (lower = 0, upper = 4) => {
+window.ASRS.getRandomValue = (lower = 0, upper = 4) => {
   return Math.floor(Math.random()*(upper - lower + 1)) + lower;    
 }
 
@@ -22,10 +20,6 @@ class Form {
       this.SetProps(event)      
     }
 
-    if (this.#properties.filledQuestions) {
-      this.Interpreter()
-    }
-
     /* STEPS:
       2. check if form is fullfilled
     */ 
@@ -34,11 +28,13 @@ class Form {
   static SetFormValues(values = [], random = false, number = 71) {
     if (random === true) {
       for (let i = 0; i < number; i++) {
-        values.push(getRandomValue())          
+        values.push(window.ASRS.getRandomValue())          
       }
-    }   
+    }
+    
     
     const formID = this.#properties.formType
+    
     const questionNum =  this.#formsAttributes[formID].questionNumber
     // const num = Math.min(questionNum, values.length)
     let k = 0;
@@ -156,12 +152,9 @@ class Form {
     // event.currentTarget.defaultValue
     console.log("Form: ", this.#formValues);
   }  
-  static Interpreter() {
-
-  }
 }
 
-// window.ASRS.Form = Form;
+window.ASRS.Form = Form;
 
 
 
@@ -170,31 +163,3 @@ window.ASRS.Form.SetFormValues([], true)
 */ 
 
 
-
-
-
-
-
-const addEvents = () => {
-  
-  const forms = document.querySelectorAll("form");
-
-  // const clickFunction = 
-  
-  forms.forEach( (form) => {
-    const inputsAll = form.querySelectorAll("input");
-    inputsAll.forEach( input => {
-      input.addEventListener("click", event => {
-        Form.ClickRouter(event)
-      })
-
-    })
-  });
-}
-
-const appTests = () => {
-  Form.SetFormValues([], true);
-}
-
-
-export { addEvents, appTests }
