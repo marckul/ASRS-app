@@ -9939,6 +9939,10 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classStaticPrivateFieldSpecSet(receiver, classConstructor, descriptor, value) { _classCheckPrivateStaticAccess(receiver, classConstructor); _classCheckPrivateStaticFieldDescriptor(descriptor, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
 function _classStaticPrivateFieldSpecGet(receiver, classConstructor, descriptor) { _classCheckPrivateStaticAccess(receiver, classConstructor); _classCheckPrivateStaticFieldDescriptor(descriptor, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
 
 function _classCheckPrivateStaticFieldDescriptor(descriptor, action) { if (descriptor === undefined) { throw new TypeError("attempted to " + action + " private static field before its declaration"); } }
@@ -9966,11 +9970,15 @@ var Form = /*#__PURE__*/function () {
       // https://www.designcise.com/web/tutorial/how-to-get-a-parent-form-element-from-a-child-input-element-using-javascript
       if (event.target.form.name === "asrs-form") {
         this.Update(event);
+        console.log("Form: ", _classStaticPrivateFieldSpecGet(this, Form, _formValues));
+        console.log("Filled Questions: ", _classStaticPrivateFieldSpecGet(this, Form, _currentProps).filledQuestions);
       } else if (event.target.form.name === "asrs-properties") {
         this.SetProps(event);
+        this.ClearForm(_classStaticPrivateFieldSpecGet(this, Form, _currentProps).formType);
+        console.log("Hello props! Properties:\n", _classStaticPrivateFieldSpecGet(this, Form, _currentProps));
       }
 
-      if (_classStaticPrivateFieldSpecGet(this, Form, _properties).filledQuestions) {
+      if (_classStaticPrivateFieldSpecGet(this, Form, _currentProps).filledQuestions >= _classStaticPrivateFieldSpecGet(this, Form, _currentProps).questionsNumber) {
         this.Interprete();
       }
       /* STEPS:
@@ -9978,9 +9986,16 @@ var Form = /*#__PURE__*/function () {
       */
 
     }
+    /** Only for testing purpose
+     * 
+     * @param {integer array} values 
+     * @param {boolean} random 
+     * @param {integer} number 
+     */
+
   }, {
-    key: "SetFormValues",
-    value: function SetFormValues() {
+    key: "ArtificialSetValues",
+    value: function ArtificialSetValues() {
       var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var random = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var number = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 71;
@@ -9991,7 +10006,7 @@ var Form = /*#__PURE__*/function () {
         }
       }
 
-      var formID = _classStaticPrivateFieldSpecGet(this, Form, _properties).formType;
+      var formID = _classStaticPrivateFieldSpecGet(this, Form, _currentProps).formType;
 
       var questionNum = _classStaticPrivateFieldSpecGet(this, Form, _formsAttributes)[formID].questionNumber; // const num = Math.min(questionNum, values.length)
 
@@ -10017,8 +10032,13 @@ var Form = /*#__PURE__*/function () {
         }
       }
 
-      _classStaticPrivateFieldSpecGet(this, Form, _properties).filledQuestions = values.length;
+      _classStaticPrivateFieldSpecGet(this, Form, _currentProps).filledQuestions = values.length;
     }
+    /** Method clear
+     * 
+     * @param {string} formID - form name: "form70" or "form71"
+     */
+
   }, {
     key: "ClearForm",
     value: function ClearForm(formID) {
@@ -10031,57 +10051,50 @@ var Form = /*#__PURE__*/function () {
         }
       }
 
-      _classStaticPrivateFieldSpecGet(this, Form, _properties).filledQuestions = 0;
+      _classStaticPrivateFieldSpecGet(this, Form, _currentProps).filledQuestions = 0;
+
+      _classStaticPrivateFieldSpecSet(this, Form, _formValues, new Array(71));
     }
   }, {
     key: "properties",
     get: function get() {
-      return _classStaticPrivateFieldSpecGet(this, Form, _properties);
+      return _classStaticPrivateFieldSpecGet(this, Form, _currentProps);
     }
   }, {
     key: "SetProps",
     value: function SetProps(_ref) {
       var currentTarget = _ref.currentTarget;
-
       // !TODO
-      if (currentTarget.name === "props-age-group" && currentTarget.defaultValue !== _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup) {
-        var currentAgeGroup = _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup;
+      var propName = currentTarget.name;
+      var newPropValue = currentTarget.defaultValue;
 
-        _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup = currentTarget.defaultValue;
-        /* OKRESLIC CZY TEST WYMAGA ZMIANY CZY NIE */
+      if (propName === "props-age-group" && newPropValue !== _classStaticPrivateFieldSpecGet(this, Form, _currentProps).ageGroup) {
+        var previousAgeGroup = _classStaticPrivateFieldSpecGet(this, Form, _currentProps).ageGroup;
 
-        var form71 = _classStaticPrivateFieldSpecGet(this, Form, _formsAttributes).form71.ageGroups;
+        _classStaticPrivateFieldSpecGet(this, Form, _currentProps).ageGroup = newPropValue; // okreslic czy widok testu wymaga zmiany czy nie       
 
-        var changeForm = !(form71.includes(currentAgeGroup) && form71.includes(currentTarget.defaultValue));
+        var currentFormType = _classStaticPrivateFieldSpecGet(this, Form, _ageVarinats)[previousAgeGroup].form;
 
-        if (changeForm) {
-          var currentFormType = "";
-          var newFormType = "";
+        var newFormType = _classStaticPrivateFieldSpecGet(this, Form, _ageVarinats)[newPropValue].form;
 
-          if (currentAgeGroup === "2-5") {
-            currentFormType = "form70";
-            newFormType = "form71";
-          } else {
-            currentFormType = "form71";
-            newFormType = "form70";
-          }
+        var changeFormView = currentFormType !== newFormType;
+
+        if (changeFormView) {
+          var newQuestsNumber = _classStaticPrivateFieldSpecGet(this, Form, _ageVarinats)[newPropValue].questionNumber;
 
           var currentForm = document.getElementById(currentFormType);
-          var newForm = document.getElementById(newFormType); // debugger;
-          // this.ClearForm(newFormType)
+          var newForm = document.getElementById(newFormType); // changes visibility 
 
           currentForm.classList.add("d-none");
           newForm.classList.remove("d-none");
-          _classStaticPrivateFieldSpecGet(this, Form, _properties).formType = newFormType;
+          _classStaticPrivateFieldSpecGet(this, Form, _currentProps).formType = newFormType;
+          _classStaticPrivateFieldSpecGet(this, Form, _currentProps).questionsNumber = newQuestsNumber;
         }
-      } else if (currentTarget.name === "props-filling-person") {
-        _classStaticPrivateFieldSpecGet(this, Form, _properties).fillingPerson = currentTarget.defaultValue; // d-none
-
-        console.log("Hello props! Properties:\n", _classStaticPrivateFieldSpecGet(this, Form, _properties));
+      } else if (propName === "props-filling-person") {
+        _classStaticPrivateFieldSpecGet(this, Form, _currentProps).fillingPerson = newPropValue;
       }
+    } // SetProps
 
-      this.ClearForm(_classStaticPrivateFieldSpecGet(this, Form, _properties).formType);
-    }
   }, {
     key: "Update",
     value: function Update(_ref2) {
@@ -10098,23 +10111,19 @@ var Form = /*#__PURE__*/function () {
       var notCheckedBefore = [undefined, null].includes(_classStaticPrivateFieldSpecGet(this, Form, _formValues)[groupIndex]);
 
       if (notCheckedBefore) {
-        _classStaticPrivateFieldSpecGet(this, Form, _properties).filledQuestions++;
+        _classStaticPrivateFieldSpecGet(this, Form, _currentProps).filledQuestions++;
       }
 
       _classStaticPrivateFieldSpecGet(this, Form, _formValues)[groupIndex] = parseInt(value);
-      console.log("Form: ", _classStaticPrivateFieldSpecGet(this, Form, _formValues));
     }
   }, {
     key: "Interprete",
-    value: function Interprete() {}
+    value: function Interprete() {
+      console.log("I'm interpreting test now..");
+    }
   }]);
   return Form;
-}(); // window.ASRS.Form = Form;
-
-/*
-window.ASRS.Form.SetFormValues([], true)
-*/
-
+}();
 
 var _formsAttributes = {
   writable: true,
@@ -10133,25 +10142,26 @@ var _ageVarinats = {
   writable: true,
   value: {
     "2-5": {
-      form: ["form70"],
+      form: "form70",
       questionNumber: 70
     },
     "6-11": {
-      form: ["form71"],
+      form: "form71",
       questionNumber: 71
     },
     "12-18": {
-      form: ["form71"],
+      form: "form71",
       questionNumber: 71
     }
   }
 };
-var _properties = {
+var _currentProps = {
   writable: true,
   value: {
     ageGroup: "2-5",
     fillingPerson: "parent",
     formType: "form70",
+    questionsNumber: 70,
     filledQuestions: 0
   }
 };
@@ -10176,7 +10186,15 @@ var addEvents = function addEvents() {
 exports.addEvents = addEvents;
 
 var appTests = function appTests() {
-  Form.SetFormValues([], true);
+  var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var random = false;
+
+  if (values.length == 0) {
+    random = true;
+  } // debugger;
+
+
+  Form.ArtificialSetValues(values, random); // Form.ArtificialSetValues([], true);
 };
 
 exports.appTests = appTests;
@@ -10817,7 +10835,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50727" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59166" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
