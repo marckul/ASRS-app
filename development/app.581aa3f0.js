@@ -9971,7 +9971,7 @@ var Form = /*#__PURE__*/function () {
       }
 
       if (_classStaticPrivateFieldSpecGet(this, Form, _properties).filledQuestions) {
-        this.Interpreter();
+        this.Interprete();
       }
       /* STEPS:
         2. check if form is fullfilled
@@ -10040,16 +10040,19 @@ var Form = /*#__PURE__*/function () {
     }
   }, {
     key: "SetProps",
-    value: function SetProps(event) {
+    value: function SetProps(_ref) {
+      var currentTarget = _ref.currentTarget;
+
       // !TODO
-      if (event.currentTarget.name === "props-age-group" && event.currentTarget.defaultValue !== _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup) {
+      if (currentTarget.name === "props-age-group" && currentTarget.defaultValue !== _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup) {
         var currentAgeGroup = _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup;
 
-        _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup = event.currentTarget.defaultValue;
+        _classStaticPrivateFieldSpecGet(this, Form, _properties).ageGroup = currentTarget.defaultValue;
         /* OKRESLIC CZY TEST WYMAGA ZMIANY CZY NIE */
 
-        var form71 = ["6-11", "12-18"];
-        var changeForm = !(form71.includes(currentAgeGroup) && form71.includes(event.currentTarget.defaultValue));
+        var form71 = _classStaticPrivateFieldSpecGet(this, Form, _formsAttributes).form71.ageGroups;
+
+        var changeForm = !(form71.includes(currentAgeGroup) && form71.includes(currentTarget.defaultValue));
 
         if (changeForm) {
           var currentFormType = "";
@@ -10071,8 +10074,8 @@ var Form = /*#__PURE__*/function () {
           newForm.classList.remove("d-none");
           _classStaticPrivateFieldSpecGet(this, Form, _properties).formType = newFormType;
         }
-      } else if (event.currentTarget.name === "props-filling-person") {
-        _classStaticPrivateFieldSpecGet(this, Form, _properties).fillingPerson = event.currentTarget.defaultValue; // d-none
+      } else if (currentTarget.name === "props-filling-person") {
+        _classStaticPrivateFieldSpecGet(this, Form, _properties).fillingPerson = currentTarget.defaultValue; // d-none
 
         console.log("Hello props! Properties:\n", _classStaticPrivateFieldSpecGet(this, Form, _properties));
       }
@@ -10081,9 +10084,14 @@ var Form = /*#__PURE__*/function () {
     }
   }, {
     key: "Update",
-    value: function Update(event) {
-      var value = event.currentTarget.defaultValue;
-      var groupName = event.currentTarget.name; // const words = groupName.split('-')
+    value: function Update(_ref2) {
+      var currentTarget = _ref2.currentTarget;
+
+      /* TODO
+        + add checking if all form questions are filled
+      */
+      var value = currentTarget.defaultValue;
+      var groupName = currentTarget.name; // const words = groupName.split('-')
 
       var group = document.getElementById(groupName);
       var groupIndex = parseInt(group.getAttribute("radio-group-index"));
@@ -10093,13 +10101,12 @@ var Form = /*#__PURE__*/function () {
         _classStaticPrivateFieldSpecGet(this, Form, _properties).filledQuestions++;
       }
 
-      _classStaticPrivateFieldSpecGet(this, Form, _formValues)[groupIndex] = parseInt(value); // event.currentTarget.defaultValue
-
+      _classStaticPrivateFieldSpecGet(this, Form, _formValues)[groupIndex] = parseInt(value);
       console.log("Form: ", _classStaticPrivateFieldSpecGet(this, Form, _formValues));
     }
   }, {
-    key: "Interpreter",
-    value: function Interpreter() {}
+    key: "Interprete",
+    value: function Interprete() {}
   }]);
   return Form;
 }(); // window.ASRS.Form = Form;
@@ -10113,9 +10120,28 @@ var _formsAttributes = {
   writable: true,
   value: {
     "form70": {
-      questionNumber: 70
+      questionNumber: 70,
+      ageGroups: ["2-5"]
     },
     "form71": {
+      questionNumber: 71,
+      ageGroups: ["6-11", "12-18"]
+    }
+  }
+};
+var _ageVarinats = {
+  writable: true,
+  value: {
+    "2-5": {
+      form: ["form70"],
+      questionNumber: 70
+    },
+    "6-11": {
+      form: ["form71"],
+      questionNumber: 71
+    },
+    "12-18": {
+      form: ["form71"],
       questionNumber: 71
     }
   }
@@ -10791,7 +10817,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57407" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50727" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

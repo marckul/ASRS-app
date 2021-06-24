@@ -23,7 +23,7 @@ class Form {
     }
 
     if (this.#properties.filledQuestions) {
-      this.Interpreter()
+      this.Interprete()
     }
 
     /* STEPS:
@@ -78,11 +78,28 @@ class Form {
   static #formsAttributes = {
     "form70": {
       questionNumber: 70,
+      ageGroups: ["2-5"],
     },
     "form71": {
       questionNumber: 71,
+      ageGroups: ["6-11", "12-18"],
     }
   };
+  static #ageVarinats = {
+    "2-5": {
+      form: ["form70"],
+      questionNumber: 70,
+    },
+    "6-11": {
+      form: ["form71"],
+      questionNumber: 71,
+    },
+    "12-18": {
+      form: ["form71"],
+      questionNumber: 71,
+    },
+  };
+  
   /* Ustawienie Ustawień */ 
   static #properties = {
     ageGroup: "2-5",
@@ -93,17 +110,17 @@ class Form {
   static get properties() {
     return this.#properties
   }
-  static SetProps(event) {
+  static SetProps({currentTarget}) {
     // !TODO
-    if (event.currentTarget.name === "props-age-group" &&  
-        event.currentTarget.defaultValue !== this.#properties.ageGroup) {
+    if (currentTarget.name === "props-age-group" &&  
+        currentTarget.defaultValue !== this.#properties.ageGroup) {
       
       const currentAgeGroup = this.#properties.ageGroup;
-      this.#properties.ageGroup = event.currentTarget.defaultValue; 
+      this.#properties.ageGroup = currentTarget.defaultValue; 
 
       /* OKRESLIC CZY TEST WYMAGA ZMIANY CZY NIE */      
-      const form71 = ["6-11", "12-18"];
-      const changeForm = !(form71.includes(currentAgeGroup) && form71.includes(event.currentTarget.defaultValue))
+      const form71 = this.#formsAttributes.form71.ageGroups;
+      const changeForm = !(form71.includes(currentAgeGroup) && form71.includes(currentTarget.defaultValue))
 
       if (changeForm) {
         let currentFormType = "";
@@ -128,8 +145,8 @@ class Form {
         this.#properties.formType = newFormType;
       }
     } 
-    else if (event.currentTarget.name === "props-filling-person") {
-      this.#properties.fillingPerson = event.currentTarget.defaultValue;      
+    else if (currentTarget.name === "props-filling-person") {
+      this.#properties.fillingPerson = currentTarget.defaultValue;      
       // d-none
       console.log("Hello props! Properties:\n",  this.#properties);
     }
@@ -140,9 +157,12 @@ class Form {
 
 
   static #formValues = new Array(71);
-  static Update(event){
-    const value = event.currentTarget.defaultValue;
-    const groupName = event.currentTarget.name;
+  static Update({currentTarget}) {
+    /* TODO
+      + add checking if all form questions are filled
+    */ 
+    const value = currentTarget.defaultValue;
+    const groupName = currentTarget.name;
   
     // const words = groupName.split('-')
     const  group = document.getElementById(groupName);
@@ -152,11 +172,11 @@ class Form {
     if (notCheckedBefore) {
       this.#properties.filledQuestions++;      
     }
+
     this.#formValues[groupIndex] = parseInt(value);
-    // event.currentTarget.defaultValue
     console.log("Form: ", this.#formValues);
   }  
-  static Interpreter() {
+  static Interprete() {
 
   }
 }
