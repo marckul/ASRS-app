@@ -11,8 +11,9 @@ import './styles/main/main.css'
 import { addEvents, appTests } from './asrsEvents';
 import Layout from './components/Layout';
 
-// DEVELOPMENT ONLY
-import './developOnly/DataPreparation'
+/* DEVELOPMENT ONLY */
+import './developOnly/develop-only'
+/* /DEVELOPMENT ONLY */
 
 
 

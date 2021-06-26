@@ -18,10 +18,10 @@ class TestSolverRaw {
 
 
   #properties = {
-    formType: undefined,
-    questionNumber: undefined,
     ageGroup: undefined,
     fillingPerson: undefined,
+    formType: undefined,
+    questionsNumber: undefined,
   };
 
 
@@ -91,4 +91,8 @@ class TestSolverRaw {
 
 //  ["RSK", "NZ", "DSM", "RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
 
-export default TestSolverRaw
+const testSolverRaw = new TestSolverRaw()
+const { scales: scalesRaw } = testSolverRaw;
+
+
+export {TestSolverRaw, scalesRaw}

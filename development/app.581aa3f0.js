@@ -10397,90 +10397,7 @@ var Layout = function Layout() {
 
 var _default = Layout;
 exports.default = _default;
-},{"@babel/runtime/helpers/taggedTemplateLiteral":"../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","lit-html":"../node_modules/lit-html/lit-html.js","./Navbar":"../src/components/Navbar.js","./TestProps":"../src/components/TestProps.js","./MainContent":"../src/components/MainContent.js","../components/Icons":"../src/components/Icons.js"}],"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js":[function(require,module,exports) {
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-module.exports = _arrayLikeToArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{}],"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":[function(require,module,exports) {
-var arrayLikeToArray = require("./arrayLikeToArray.js");
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return arrayLikeToArray(arr);
-}
-
-module.exports = _arrayWithoutHoles;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{"./arrayLikeToArray.js":"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js"}],"../node_modules/@babel/runtime/helpers/iterableToArray.js":[function(require,module,exports) {
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-
-module.exports = _iterableToArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{}],"../node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js":[function(require,module,exports) {
-var arrayLikeToArray = require("./arrayLikeToArray.js");
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
-}
-
-module.exports = _unsupportedIterableToArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{"./arrayLikeToArray.js":"../node_modules/@babel/runtime/helpers/arrayLikeToArray.js"}],"../node_modules/@babel/runtime/helpers/nonIterableSpread.js":[function(require,module,exports) {
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-module.exports = _nonIterableSpread;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{}],"../node_modules/@babel/runtime/helpers/toConsumableArray.js":[function(require,module,exports) {
-var arrayWithoutHoles = require("./arrayWithoutHoles.js");
-
-var iterableToArray = require("./iterableToArray.js");
-
-var unsupportedIterableToArray = require("./unsupportedIterableToArray.js");
-
-var nonIterableSpread = require("./nonIterableSpread.js");
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
-}
-
-module.exports = _toConsumableArray;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{"./arrayWithoutHoles.js":"../node_modules/@babel/runtime/helpers/arrayWithoutHoles.js","./iterableToArray.js":"../node_modules/@babel/runtime/helpers/iterableToArray.js","./unsupportedIterableToArray.js":"../node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js","./nonIterableSpread.js":"../node_modules/@babel/runtime/helpers/nonIterableSpread.js"}],"../node_modules/@babel/runtime/helpers/defineProperty.js":[function(require,module,exports) {
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{}],"../node_modules/@babel/runtime/helpers/classApplyDescriptorGet.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/taggedTemplateLiteral":"../node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","lit-html":"../node_modules/lit-html/lit-html.js","./Navbar":"../src/components/Navbar.js","./TestProps":"../src/components/TestProps.js","./MainContent":"../src/components/MainContent.js","../components/Icons":"../src/components/Icons.js"}],"../node_modules/@babel/runtime/helpers/classApplyDescriptorGet.js":[function(require,module,exports) {
 function _classApplyDescriptorGet(receiver, descriptor) {
   if (descriptor.get) {
     return descriptor.get.call(receiver);
@@ -10514,7 +10431,35 @@ function _classPrivateFieldGet(receiver, privateMap) {
 
 module.exports = _classPrivateFieldGet;
 module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{"./classApplyDescriptorGet.js":"../node_modules/@babel/runtime/helpers/classApplyDescriptorGet.js","./classExtractFieldDescriptor.js":"../node_modules/@babel/runtime/helpers/classExtractFieldDescriptor.js"}],"../src/developOnly/TestSolverRaw.js":[function(require,module,exports) {
+},{"./classApplyDescriptorGet.js":"../node_modules/@babel/runtime/helpers/classApplyDescriptorGet.js","./classExtractFieldDescriptor.js":"../node_modules/@babel/runtime/helpers/classExtractFieldDescriptor.js"}],"../node_modules/@babel/runtime/helpers/classApplyDescriptorSet.js":[function(require,module,exports) {
+function _classApplyDescriptorSet(receiver, descriptor, value) {
+  if (descriptor.set) {
+    descriptor.set.call(receiver, value);
+  } else {
+    if (!descriptor.writable) {
+      throw new TypeError("attempted to set read only private field");
+    }
+
+    descriptor.value = value;
+  }
+}
+
+module.exports = _classApplyDescriptorSet;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],"../node_modules/@babel/runtime/helpers/classPrivateFieldSet.js":[function(require,module,exports) {
+var classApplyDescriptorSet = require("./classApplyDescriptorSet.js");
+
+var classExtractFieldDescriptor = require("./classExtractFieldDescriptor.js");
+
+function _classPrivateFieldSet(receiver, privateMap, value) {
+  var descriptor = classExtractFieldDescriptor(receiver, privateMap, "set");
+  classApplyDescriptorSet(receiver, descriptor, value);
+  return value;
+}
+
+module.exports = _classPrivateFieldSet;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{"./classApplyDescriptorSet.js":"../node_modules/@babel/runtime/helpers/classApplyDescriptorSet.js","./classExtractFieldDescriptor.js":"../node_modules/@babel/runtime/helpers/classExtractFieldDescriptor.js"}],"../src/TestSolver.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10528,7 +10473,13 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 var _classPrivateFieldGet2 = _interopRequireDefault(require("@babel/runtime/helpers/classPrivateFieldGet"));
 
+var _classPrivateFieldSet2 = _interopRequireDefault(require("@babel/runtime/helpers/classPrivateFieldSet"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _scalesRaw = /*#__PURE__*/new WeakMap();
+
+var _formValues = /*#__PURE__*/new WeakMap();
 
 var _properties = /*#__PURE__*/new WeakMap();
 
@@ -10536,30 +10487,38 @@ var _template = /*#__PURE__*/new WeakMap();
 
 var _reverse = /*#__PURE__*/new WeakMap();
 
-var _scales = /*#__PURE__*/new WeakMap();
+var _allScalesIndexes = /*#__PURE__*/new WeakMap();
 
-var TestSolverRaw = /*#__PURE__*/function () {
-  function TestSolverRaw() {
-    /* 
-      args;
-      + questions values
-      + ageGroup
-      + fillingPerson
-        TODO: 
-      1. SET
-       + #properties
-       + 
-    */
+var TestSolver = /*#__PURE__*/function () {
+  /**
+   * 
+   * @param {number[]} formValues - form values given by a form of a integer number array
+   * @param {object} formProperties - form properties object (property of Form class)
+   */
+  function TestSolver(formValues, _ref) {
+    var ageGroup = _ref.ageGroup,
+        fillingPerson = _ref.fillingPerson,
+        formType = _ref.formType,
+        questionsNumber = _ref.questionsNumber;
+    (0, _classCallCheck2.default)(this, TestSolver);
 
-    (0, _classCallCheck2.default)(this, TestSolverRaw);
+    _scalesRaw.set(this, {
+      writable: true,
+      value: {}
+    });
+
+    _formValues.set(this, {
+      writable: true,
+      value: void 0
+    });
 
     _properties.set(this, {
       writable: true,
       value: {
-        formType: undefined,
-        questionNumber: undefined,
         ageGroup: undefined,
-        fillingPerson: undefined
+        fillingPerson: undefined,
+        formType: undefined,
+        questionsNumber: undefined
       }
     });
 
@@ -10581,175 +10540,132 @@ var TestSolverRaw = /*#__PURE__*/function () {
       }
     });
 
-    _scales.set(this, {
+    _allScalesIndexes.set(this, {
       writable: true,
       value: {
-        // !!OD SUROWYCH INDEKSÓW SKAL TRZEBA ODJAC 2
+        // 
         form70: {
-          RSK: ["2", "4", "5", "6", "8", "14:20", "22:23", "25:26", "29:31", "33:34", "36:37", "38:39", "41", "44:45", "55:56", "50:53", "58", "62:64", "68"],
-          NZ: ["3", "9:13", "21", "27:28", "40", "42:43", "46:49", "54", "57", "61", "65:66", "70:71"],
-          DSM: ["2", "4:6", "9:12", "14:15", "17", "19:22", "27", "29:30", "39:44", "48:49", "51:52", "54:55", "57", "62", "65:66", "71"],
-          RR: ["5", "16", "25", "31", "41", "50", "52", "53", "62"],
-          RD: ["22", "24", "32", "34", "45"],
-          WSE: ["2", "4", "6", "14", "15", "17", "20", "37", "39", "44", "51", "55"],
-          NJ: ["7", "23", "43", "60", "54", "71"],
-          ST: ["12", "40", "48", "65", "66", "69"],
-          SZ: ["9:11", "21", "28", "49", "57", "61"],
-          WS: ["3", "13", "46:47", "67", "70"],
-          US: ["18", "26", "33", "35", "38", "56", "58:59", "63:64"]
+          RSK: [0, 2, 3, 4, 6, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 24, 27, 28, 29, 31, 32, 34, 35, 36, 37, 39, 42, 43, 53, 54, 48, 49, 50, 51, 56, 60, 61, 62, 66],
+          NZ: [1, 7, 8, 9, 10, 11, 19, 25, 26, 38, 40, 41, 44, 45, 46, 47, 52, 55, 59, 63, 64, 68, 69],
+          DSM: [0, 2, 3, 4, 7, 8, 9, 10, 12, 13, 15, 17, 18, 19, 20, 25, 27, 28, 37, 38, 39, 40, 41, 42, 46, 47, 49, 50, 52, 53, 55, 60, 63, 64, 69],
+          RR: [3, 14, 23, 29, 39, 48, 50, 51, 60],
+          RD: [20, 22, 30, 32, 43],
+          WSE: [0, 2, 4, 12, 13, 15, 18, 35, 37, 42, 49, 53],
+          NJ: [5, 21, 41, 58, 52, 69],
+          ST: [10, 38, 46, 63, 64, 67],
+          SZ: [7, 8, 9, 19, 26, 47, 55, 59],
+          WS: [1, 11, 44, 45, 65, 68],
+          US: [16, 24, 31, 33, 36, 54, 56, 57, 61, 62]
         },
         form71: {
-          RSK: ["4", "5", "9", "10", "13", "24", "29", "32", "33", "34", "40", "43", "44", "46", "56", "57", "62", "70", "71"],
-          NZ: ["3", "14", "18", "21", "22", "23", "25:28", "30", "39", "41", "47", "49:52", "55", "63", "64", "66", "68", "69"],
-          SR: ["2", "6:8", "17", "19", "31", "35:37", "45", "53", "58:59", "61", "67", "72"],
-          DSM: ["9:10", "12", "14", "16", "20:22", "24:25", "27", "29", "32:34", "38", "40", "43:44", "47", "49:52", "62", "64", "66", "68", "70:71"],
-          RR: ["4", "15", "20", "32", "46", "51", "65", "70:71"],
-          RD: ["19", "34:35", "38", "60", "67"],
-          WSE: ["5", "9:10", "12", "16", "29", "33", "40", "42:44", "56", "62"],
-          NJ: ["18", "21:22", "27", "59", "69"],
-          ST: ["47", "49", "54:55", "68"],
-          SZ: ["14", "23", "25", "41", "50", "52", "64", "66"],
-          WS: ["3", "26", "28", "30", "39", "63"],
-          UW: ["2", "6", "11", "17", "31", "35:36", "45", "48", "53", "58"]
+          RSK: [2, 3, 7, 8, 11, 22, 27, 30, 31, 32, 38, 41, 42, 44, 54, 55, 60, 68, 69],
+          NZ: [1, 12, 16, 19, 20, 21, 23, 24, 25, 26, 28, 37, 39, 45, 47, 48, 49, 50, 53, 61, 62, 64, 66, 67],
+          SR: [0, 4, 5, 6, 15, 17, 29, 33, 34, 35, 43, 51, 56, 57, 59, 65, 70],
+          DSM: [7, 8, 10, 12, 14, 18, 19, 20, 22, 23, 25, 27, 30, 31, 32, 36, 38, 41, 42, 45, 47, 48, 49, 50, 60, 62, 64, 66, 68, 69],
+          RR: [2, 13, 18, 30, 44, 49, 63, 68, 69],
+          RD: [17, 32, 33, 36, 58, 65],
+          WSE: [3, 7, 8, 10, 14, 27, 31, 38, 40, 41, 42, 54, 60],
+          NJ: [16, 19, 20, 25, 57, 67],
+          ST: [45, 47, 52, 53, 66],
+          SZ: [12, 21, 23, 39, 48, 50, 62, 64],
+          WS: [1, 24, 26, 28, 37, 61],
+          UW: [0, 4, 9, 15, 29, 33, 34, 43, 46, 51, 56]
         }
       }
     });
+
+    /* 
+      args;
+      + questions values
+      + ageGroup
+      + fillingPerson
+        TODO: 
+      1. SET
+       + #properties
+       + 
+    */
+    (0, _classPrivateFieldSet2.default)(this, _formValues, formValues);
+    (0, _classPrivateFieldSet2.default)(this, _properties, {
+      ageGroup: ageGroup,
+      fillingPerson: fillingPerson,
+      formType: formType,
+      questionsNumber: questionsNumber
+    });
+    this.AllSolveRaw();
   }
 
-  (0, _createClass2.default)(TestSolverRaw, [{
-    key: "scales",
+  (0, _createClass2.default)(TestSolver, [{
+    key: "scalesRaw",
     get: function get() {
-      return (0, _classPrivateFieldGet2.default)(this, _scales);
+      return (0, _classPrivateFieldGet2.default)(this, _scalesRaw);
+    }
+  }, {
+    key: "SolveRaw",
+    value: function SolveRaw(scaleIndexes) {
+      Object.freeze(scaleIndexes);
+      var max = 4; // maximum points in question scale
+
+      var reverseQuestion = (0, _classPrivateFieldGet2.default)(this, _reverse)[(0, _classPrivateFieldGet2.default)(this, _properties).formType];
+      var scaleSum = 0;
+
+      for (var i = 0; i < scaleIndexes.length; i++) {
+        var quesNumber = scaleIndexes[i];
+        var value = (0, _classPrivateFieldGet2.default)(this, _formValues)[quesNumber];
+        var reversed = reverseQuestion[quesNumber]; // 1 or 0
+
+        var sign = 1 - 2 * reversed; // 
+
+        scaleSum += max * reversed + sign * value;
+      }
+
+      return scaleSum;
+    }
+    /**
+     * 
+     */
+
+  }, {
+    key: "AllSolveRaw",
+    value: function AllSolveRaw() {
+      var formType = (0, _classPrivateFieldGet2.default)(this, _properties).formType;
+      var allScalesIndexes = (0, _classPrivateFieldGet2.default)(this, _allScalesIndexes)["form70"];
+      Object.freeze(allScalesIndexes);
+
+      for (var key in allScalesIndexes) {
+        var scaleIndexes = allScalesIndexes[key];
+        var scaleResult = this.SolveRaw(scaleIndexes);
+        (0, _classPrivateFieldGet2.default)(this, _scalesRaw)[key] = scaleResult;
+      }
+    }
+  }, {
+    key: "allScalesIndexes",
+    get: function get() {
+      return (0, _classPrivateFieldGet2.default)(this, _allScalesIndexes);
     }
   }]);
-  return TestSolverRaw;
+  return TestSolver;
 }(); //  ["RSK", "NZ", "DSM", "RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
 
 
-var _default = TestSolverRaw;
+var _default = TestSolver;
 exports.default = _default;
-},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/classPrivateFieldGet":"../node_modules/@babel/runtime/helpers/classPrivateFieldGet.js"}],"../src/developOnly/DataPreparation.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/classPrivateFieldGet":"../node_modules/@babel/runtime/helpers/classPrivateFieldGet.js","@babel/runtime/helpers/classPrivateFieldSet":"../node_modules/@babel/runtime/helpers/classPrivateFieldSet.js"}],"../src/developOnly/develop-only.js":[function(require,module,exports) {
 "use strict";
 
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
-var _TestSolverRaw = _interopRequireDefault(require("./TestSolverRaw"));
+var _TestSolver = _interopRequireDefault(require("../TestSolver"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var testSolverRaw = new _TestSolverRaw.default(); // // https://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
-// function CloneObj(obj) {
-//   if (null == obj || "object" != typeof obj) return obj;
-//   var copy = obj.constructor();
-//   for (var attr in obj) {
-//       if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-//   }
-//   return copy;
-// }
-
-/** ShiftScales
- * Przesunięcie indeksów Skal o -2 */
-
-var ShiftScales = function ShiftScales(ageVariant) {
-  var scales = _objectSpread({}, testSolverRaw.scales[ageVariant]);
-
-  var keys = Object.keys(scales); // console.log("\nSCALES NAMES\n", keys);
-  // console.log("SCALES BEFORE SHIFT \n", testSolverRaw.scales[ageVariant]);
-  // Klonowanie skal
-
-  for (var i = 0; i < keys.length; i++) {
-    scales[keys[i]] = (0, _toConsumableArray2.default)(testSolverRaw.scales[ageVariant][keys[i]]);
-  }
-
-  for (var _i = 0; _i < keys.length; _i++) {
-    var scale = scales[keys[_i]]; // console.log(scale);
-
-    for (var j = 0; j < scale.length; j++) {
-      var index = scale[j];
-
-      if (!isNaN(index)) {
-        scale[j] = (parseInt(index) - 2).toString();
-      } else {
-        // let index = ""
-        var nums = index.split(":").map(function (num) {
-          return parseInt(num) - 2;
-        });
-        scale[j] = nums.join(":");
-      }
-    }
-
-    scales[keys[_i]] = scale;
-  }
-
-  return scales;
-};
-
-var foldNicely = function foldNicely(prefix) {
-  var array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ["1", "2"];
-  var arrayLength = array.length.toString();
-  var addSpace = "  ";
-
-  for (var i = 0; i < arrayLength.length; i++) {
-    addSpace += " ";
-  }
-
-  var arrayStr = array.map(function (str) {
-    return "\"".concat(str, "\"");
-  }).join(', ');
-  return "".concat(prefix).concat(addSpace, "[").concat(arrayStr, "]");
-};
-
-var DisplayInOrder = function DisplayInOrder(object) {
-  var displayNice = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "\nSCALES AFTER SHIFT DISPLAYED IN ORDER";
-  console.log(title);
-
-  if (displayNice) {
-    var string = "";
-
-    for (var key in object) {
-      if (Object.hasOwnProperty.call(object, key)) {
-        var array = object[key];
-        var line = foldNicely("".concat(key, ": "), array);
-        string += "".concat(line, ",\n");
-      }
-    }
-
-    console.log(string);
-  } else {
-    for (var _key in object) {
-      if (Object.hasOwnProperty.call(object, _key)) {
-        var _array = object[_key];
-        console.log("".concat(_key, ": "), _array);
-      }
-    }
-  }
-}; // FUNCTION CALL
-
-
-window.ASRS_DATA_PREPARATION = function () {
-  var ageVariant = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "form70";
-  console.log(" ======================================================== ", "\n   ASRS DATA PREPARATION FOR VARIANT ".concat(ageVariant, "\n"), "======================================================== \n"); // const ageVariant = "form70";
-
-  var scalesShifted = ShiftScales(ageVariant);
-  console.log("\n\nScales ".concat(ageVariant, " BEFORE shift\n"), testSolverRaw.scales[ageVariant]); // console.log(`\n\nScales ${ageVariant} AFTER shift\n`, scalesShifted);
-
-  DisplayInOrder(testSolverRaw.scales[ageVariant], false, "\n\nScales ".concat(ageVariant, " BEFORE shift displayed in order\n")); // DisplayInOrder(scalesShifted, false)
-
-  DisplayInOrder(testSolverRaw.scales[ageVariant], true, "\n\nScales ".concat(ageVariant, " BEFORE shift displayed NICELY in order\n"));
-  DisplayInOrder(scalesShifted, true, "\n\nScales ".concat(ageVariant, " AFTER shift displayed in order (!SHOULD BE LIKE ABOVE MINUS 2)\n"));
-  console.log(" ======================================================== ", "\n   \t\t\t\t\t\tEND\n", "======================================================== \n\n\n\n");
-};
-
-window.ASRS_DATA_PREPARATION("form70");
-window.ASRS_DATA_PREPARATION("form71");
-},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","@babel/runtime/helpers/defineProperty":"../node_modules/@babel/runtime/helpers/defineProperty.js","./TestSolverRaw":"../src/developOnly/TestSolverRaw.js"}],"../src/app.js":[function(require,module,exports) {
+// import './DataPreparation/DataPreparation'
+var testSolver = new _TestSolver.default([2, 2, 1, 2, 4, 4, 3, 4, 0, 2, 0, 2, 2, 2, 2, 3, 1, 4, 2, 1, 4, 3, 3, 0, 4, 1, 3, 1, 4, 0, 1, 2, 0, 4, 4, 1, 0, 0, 2, 3, 1, 3, 4, 2, 2, 3, 0, 3, 1, 0, 1, 1, 4, 4, 0, 0, 3, 3, 3, 3, 0, 1, 3, 2, 0, 4, 3, 3, 3, 3, null], {
+  ageGroup: "2-5",
+  fillingPerson: "parent",
+  formType: "form70",
+  questionsNumber: 70,
+  filledQuestions: 70
+});
+console.log(JSON.stringify(testSolver.scalesRaw));
+},{"../TestSolver":"../src/TestSolver.js"}],"../src/app.js":[function(require,module,exports) {
 "use strict";
 
 var _litHtml = require("lit-html");
@@ -10766,7 +10682,7 @@ var _asrsEvents = require("./asrsEvents");
 
 var _Layout = _interopRequireDefault(require("./components/Layout"));
 
-require("./developOnly/DataPreparation");
+require("./developOnly/develop-only");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10776,6 +10692,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 console.log("It's connected");
 
+/* /DEVELOPMENT ONLY */
 var app = function app() {
   // .innerHTML = ;
   // document.getElementById("header").innerHTML = Navbar().getHTML().toString();
@@ -10789,7 +10706,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.appTests = _asrsEvents.appTests; // new Form()
 });
 console.log("EOF");
-},{"lit-html":"../node_modules/lit-html/lit-html.js","./styles/start/start.css":"../src/styles/start/start.css","../node_modules/bootstrap/dist/css/bootstrap.min.css":"../node_modules/bootstrap/dist/css/bootstrap.min.css","bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.esm.js","./styles/main/main.css":"../src/styles/main/main.css","./asrsEvents":"../src/asrsEvents.js","./components/Layout":"../src/components/Layout.js","./developOnly/DataPreparation":"../src/developOnly/DataPreparation.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"lit-html":"../node_modules/lit-html/lit-html.js","./styles/start/start.css":"../src/styles/start/start.css","../node_modules/bootstrap/dist/css/bootstrap.min.css":"../node_modules/bootstrap/dist/css/bootstrap.min.css","bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.esm.js","./styles/main/main.css":"../src/styles/main/main.css","./asrsEvents":"../src/asrsEvents.js","./components/Layout":"../src/components/Layout.js","./developOnly/develop-only":"../src/developOnly/develop-only.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10817,7 +10734,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50727" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55179" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
