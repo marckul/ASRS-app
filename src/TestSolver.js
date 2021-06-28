@@ -1,4 +1,4 @@
-
+import allStandardizationTables from './all-standardization-tables'
 
 class TestSolver {
   /**
@@ -22,7 +22,10 @@ class TestSolver {
     this.#properties = { ageGroup, fillingPerson, formType, questionsNumber }
 
     this.AllSolveRaw()
+    this.setStandardizationTable()
+    this.AllStandardizeRawResults();
   }
+  /** */
   #scalesRaw = { }
   get scalesRaw() {
     return this.#scalesRaw
@@ -57,6 +60,62 @@ class TestSolver {
       const scaleIndexes = allScalesIndexes[key]
       const scaleResult = this.SolveRaw(scaleIndexes)
       this.#scalesRaw[key] = scaleResult;     
+    }
+  }
+
+
+
+  
+  
+  #standardizationTable = {
+    scales: {
+      prop: []
+    },
+    Ten: []
+  }
+  setStandardizationTable() {
+    this.#standardizationTable = allStandardizationTables[this.#properties.ageGroup][this.#properties.fillingPerson]
+  }
+  get standardizationTable() {
+    return this.#standardizationTable;
+  }
+
+
+  #standarizedResult = { }
+  get standarizedResult() {
+    return this.#standarizedResult;
+  }
+
+  StandardizeRawResult(scaleName, singleRawResult) {
+    const ageGroup = this.#properties.ageGroup
+    const fillingPerson = this.#properties.fillingPerson
+
+    const standardScale = this.standardizationTable.scales[scaleName] // scaleName
+    const tensScale = this.standardizationTable.Ten 
+    // debugger;
+
+    let index = 0; // sic!
+    for (let i = 0; i < standardScale.length; i++) {
+      const resultMapper = standardScale[i];
+      if (!resultMapper) {
+        continue;
+      }
+
+      if (singleRawResult > resultMapper) {
+        break;
+      } 
+      else {
+        index = i;    
+      }      
+    }
+    const singleStandResult = tensScale[index];
+
+    return singleStandResult
+  }
+  AllStandardizeRawResults() {
+    
+    for (const key in this.#scalesRaw) {
+      this.#standarizedResult[key] = this.StandardizeRawResult(key, this.#scalesRaw[key])
     }
   }
   #formValues;
@@ -131,4 +190,27 @@ class TestSolver {
 }
 
 //  ["RSK", "NZ", "DSM", "RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
-export default TestSolver
+
+
+
+const testSolver = new TestSolver(
+  [2, 2, 1, 2, 4, 4, 3, 4, 0, 2, 0, 2, 2, 2, 2, 3, 1, 4, 2, 1, 4, 3, 3, 0, 4, 1, 3, 1, 4, 0, 1, 2, 0, 4, 4, 1, 0, 0, 2, 3, 1, 3, 4, 2, 2, 3, 0, 3, 1, 0, 1, 1, 4, 4, 0, 0, 3, 3, 3, 3, 0, 1, 3, 2, 0, 4, 3, 3, 3, 3, null],
+  {
+    ageGroup: "2-5",
+    fillingPerson: "parent",
+    formType: "form70",
+    questionsNumber: 70,
+    filledQuestions: 70
+  }
+);
+
+
+console.log(JSON.stringify(testSolver.scalesRaw));
+
+
+console.log(testSolver.standardizationTable);
+
+console.log(testSolver.standarizedResult);
+
+
+// export default TestSolver

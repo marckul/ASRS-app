@@ -22,12 +22,12 @@ const Shift = function (rangesArray, shift = -2) {
 
 /** Parses an array of string ranges to an integer
  *
- * @param {string[]} scalesString
+ * @param {string[]} questionIndexes
  */
-const ParseInt = function(scalesString) {
+const ParseInt = function(questionIndexes) {
   const intArray = [];
 
-  scalesString.forEach((rangeString) => {
+  questionIndexes.forEach((rangeString) => {
     const numbers = RangeParse(rangeString);
     intArray.push(...numbers);
   });
@@ -76,7 +76,7 @@ const Stringify = function(array, dipslayPrefix = true) {
     prefix = `(${array.length}) `;
   } 
   
-  if (typeof array[0] === "string") {
+  if (typeof array[0] === "string" || array[0] === null) {
     const string = `${prefix}["${array.join(`", "`)}"]`
     return string
   } 
