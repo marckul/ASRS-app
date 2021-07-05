@@ -1,5 +1,9 @@
 
 
+const formSettings = {
+  form70
+}
+
 class TestSolver {
   constructor() {
     /* 
@@ -19,10 +23,10 @@ class TestSolver {
 
 
   #properties = {
-    formType: undefined,
-    questionNumber: undefined,
     ageGroup: undefined,
     fillingPerson: undefined,
+    formType: undefined,
+    questionNumber: undefined,
   };
 
 
