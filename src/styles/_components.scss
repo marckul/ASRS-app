@@ -116,8 +116,9 @@ $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
 
 
 // SINGLE RADIO BUTTON
-$color-radioButtonChecked:  rgb(48, 168, 0);  // $markul-color-secondary
-$color-labelButtonChecked: rgb(27, 94, 0); 
+$color-radioButtonChecked: $markul-color-navActiveLight;// rgb(48, 168, 0);  // $markul-color-secondary
+$color-labelButtonChecked: $markul-color-navActive;// rgb(27, 94, 0); 
+
 .my-radio-button input[type='radio'] {
   display: none;
 }
@@ -162,6 +163,55 @@ $color-labelButtonChecked: rgb(27, 94, 0);
   }  
 }
 /* */ 
+
+
+
+
+/* =================
+  WYNIKI
+==================== */ 
+
+.test-results {
+  tbody {
+    th {
+      font-weight: normal;
+    }
+    tr{
+      $n: 9;
+      $table-odd-bg: ($markul-color-primary + $n*rgb(255, 255, 255)) / ($n+1); // rgb(240, 240, 240);
+
+      $n1: 10;
+      $hover-tr: ($markul-color-navActiveLight + $n1*#fff)/(1+$n1);
+      
+      $n2: .5;
+      $hover-tr-odd: ($markul-color-navActiveLight-pure + $n2*#fff)/(1+$n2);
+
+      &:nth-child(odd) {
+        
+        background: $table-odd-bg;
+        &:hover {
+          $n: 6;
+          background: ($hover-tr-odd + $n*$table-odd-bg)/(1+$n);
+        }
+      }
+
+      &:nth-child(even) {
+        $n: 5;
+        &:hover {
+          background: ($hover-tr-odd + $n*#fff)/(1+$n);
+        }
+      }   
+
+      
+      &>td.scale-type {
+        vertical-align: middle;
+        background: #fff !important;      
+      }  
+    }
+
+    
+  }
+}
 
 
 

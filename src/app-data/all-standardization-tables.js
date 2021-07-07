@@ -1,8 +1,29 @@
 
 
-
-const allStandardizationTables = {
+/** **ALL_STANDARDIZATION_TABLES** constant object contains all Standardization 
+ * Tables informations. 
+ * 
+ * All single value in scales property is the **MAXIMUM** in the raw test result 
+ * value range.The range maps to the normalized value (also called Ten value). 
+ * Ten value of Ten corresponding to the range is stored in Ten property
+ * 
+ * @param "2-5"   - contains all standarisation information for "2-5" age group
+ * @param "6-11"  - contains all standarisation information for "6-11" age group
+ * @param "12-18" - contains all standarisation information for "12-18" age group
+ * 
+ * All **ageGroup** properties have same structure that contains testCompletingPerson:
+ * @param ageGroup.parent contains the single Standardization Table for parent  
+ * @param ageGroup.teacher contains the single Standardization Table for teacher  
+ * 
+ * **Parent** property and **teacher** properties (testCompletingPerson) have same structure that all 
+ * contains the single Standardization Table in form of properties:
+ * @param ageGroup.testCompletingPerson.scales  contains single scales as properties in each one scale in form of array
+ * @param ageGroup.testCompletingPerson.Ten     contains array of tens values
+ * 
+ */
+const ALL_STANDARDIZATION_TABLES = {
   "2-5": {
+    /** Contains the single Standardization Table for a parent */
     parent:  {
       scales: {
         RSK: [156,null,102,null,91,90,89,88,86,85,82,80,79,76,73,69,66,63,61,59,57,55,53,51,49,47,46,44,43,41,40,39,37,36,35,33,31,29,28,27,26,23,22,21,20,19,17,16,15,14,13,null,12,10,8,7,null,null,4,null,null],
@@ -20,6 +41,7 @@ const allStandardizationTables = {
       },
       Ten: [80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20],
     },
+    /** Contains the single Standardization Table for a teacher */
     teacher: {
       scales: {
         RSK: [136,null,133,null,129,128,126,125,116,113,105,104,101,97,92,84,81,76,72,70,66,64,58,55,53,51,50,48,47,44,42,40,38,36,34,32,30,28,27,26,24,23,21,20,18,17,16,14,13,12,11,9,8,7,6,5,4,3,null,null,null],
@@ -35,10 +57,11 @@ const allStandardizationTables = {
         WS: [24,null,null,null,16,15,null,14,null,null,13,null,12,11,10,null,9,8,null,7,null,6,null,5,null,4,null,null,3,null,null,2,null,null,null,1,null,null,null,null,null,null,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
         US: [null,null,null,null,40,35,null,34,32,31,30,null,28,27,26,25,24,23,22,null,20,19,18,null,17,16,null,15,null,14,13,null,12,null,11,10,null,9,8,null,7,6,null,5,null,4,null,3,2,null,null,1,null,null,null,null,0,null,null,null,null],
       },
-
+      Ten: [80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20]
     }
   },
   "6-11": {
+    /** Contains the single Standardization Table for a parent */
     parent:  {
       scales: {
         RSK: [76,null,50,44,43,41,40,39,null,38,null,37,36,34,32,31,30,null,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,null,10,9,8,null,7,6,null,5,null,4,null,3,null,2,null,null,1,null,null,null,0,null,null,null,null],
@@ -57,6 +80,7 @@ const allStandardizationTables = {
       },
       Ten: [81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20],
     },
+    /** Contains the single Standardization Table for a teacher */
     teacher: {
       scales: {
         RSK: [76,null,63,null,59,null,58,57,52,49,45,44,42,41,39,38,36,35,34,32,31,30,29,27,26,24,23,22,21,19,18,16,15,14,13,12,11,10,9,null,8,7,6,null,5,4,null,3,null,2,null,1,null,null,null,0,null,null,null,null,null,null],
@@ -77,6 +101,7 @@ const allStandardizationTables = {
     }
   },
   "12-18": {
+    /** Contains the single Standardization Table for a parent */
     parent:  {
       scales: {
         RSK: [76,null,65,55,54,48,null,null,47,46,45,44,43,40,38,37,36,35,33,32,31,30,29,28,27,25,24,23,22,21,20,19,18,17,16,15,14,null,13,12,11,10,null,9,null,8,7,null,null,6,null,5,null,4,null,null,3,2,null,null,1,0],
@@ -95,6 +120,7 @@ const allStandardizationTables = {
       },
       Ten: [81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20],
     },
+    /** Contains the single Standardization Table for a teacher */
     teacher: {
       scales: {
         RSK: [76,null,null,null,58,null,57,null,56,55,53,52,null,50,49,46,45,44,42,41,39,37,35,34,32,30,29,27,25,23,22,21,19,18,16,15,14,13,12,11,10,9,8,7,6,5,null,4,3,null,2,null,null,1,null,null,null,null,null,0,null,null],
@@ -118,6 +144,4 @@ const allStandardizationTables = {
 
 
 
-
-
-export default allStandardizationTables
+export default ALL_STANDARDIZATION_TABLES

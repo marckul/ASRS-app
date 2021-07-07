@@ -1,5 +1,6 @@
 
-// import TestSolver from './TestSolver'
+import TestSolver from './TestSolver'
+import * as Results from './components/Results'
 
 // window.ASRS = {}
 
@@ -178,7 +179,13 @@ class Form {
     this.#formValues[groupIndex] = parseInt(value);
   }  
   static Interprete() {
+    // TODO connect with table
     console.log("I'm interpreting test now..");
+    const testSolver = new TestSolver(this.#formValues, this.properties)
+
+    // console.log(testSolver.scalesRaw);
+    console.log(testSolver.standarizedResult);
+    Results.CreateResultsTable()
   }
 }
 
@@ -206,9 +213,7 @@ const appTests = (values = []) => {
   if (values.length == 0) {
     random = true;
   }
-  // debugger;
   Form.ArtificialSetValues(values, random);
-  // Form.ArtificialSetValues([], true);
 }
 
 export { addEvents, appTests }

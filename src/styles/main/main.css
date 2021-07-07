@@ -201,7 +201,7 @@ body {
 }
 
 .my-radio-button input:checked + label {
-  color: #1b5e00;
+  color: #0F618A;
   font-weight: bold;
 }
 
@@ -214,12 +214,35 @@ body {
   left: 10px;
   content: " ";
   display: block;
-  background: #30a800;
+  background: #7BCFE1;
 }
 
 .my-radio-button input:checked + label:before {
-  border: 2px solid #30a800;
+  border: 2px solid #7BCFE1;
 }
 
 /* */
+/* =================
+  WYNIKI
+==================== */
+.test-results tbody th {
+  font-weight: normal;
+}
+
+.test-results tbody tr:nth-child(odd) {
+  background: #ebf0ff;
+}
+
+.test-results tbody tr:nth-child(odd):hover {
+  background: #d5eeff;
+}
+
+.test-results tbody tr:nth-child(even):hover {
+  background: #e3faff;
+}
+
+.test-results tbody tr > td.scale-type {
+  vertical-align: middle;
+  background: #fff !important;
+}
 /*# sourceMappingURL=main.css.map */

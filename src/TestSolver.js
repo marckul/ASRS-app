@@ -1,5 +1,17 @@
-import allStandardizationTables from './all-standardization-tables'
+import ALL_STANDARDIZATION_TABLES from './app-data/all-standardization-tables'
 
+// allStandardizationTables
+
+/* TODO 06.07.2021
+  OBLICZANIE WO 
+  OBLICZANIE KLASYFIKACJI
+  WPISYWANIE DO TABELI 
+*/ 
+
+
+/**
+ * @alias testSolver
+ */
 class TestSolver {
   /**
    * 
@@ -22,10 +34,10 @@ class TestSolver {
     this.#properties = { ageGroup, fillingPerson, formType, questionsNumber }
 
     this.AllSolveRaw()
-    this.setStandardizationTable()
+    this.SetStandardizationTable()
     this.AllStandardizeRawResults();
   }
-  /** */
+  /** Object contains integer values of scale result value  */
   #scalesRaw = { }
   get scalesRaw() {
     return this.#scalesRaw
@@ -50,9 +62,8 @@ class TestSolver {
    * 
    */
   AllSolveRaw() {
-    
     const formType = this.#properties.formType;
-    const allScalesIndexes = this.#allScalesIndexes["form70"]
+    const allScalesIndexes = this.#allScalesIndexes[formType]
 
     Object.freeze(allScalesIndexes);
 
@@ -63,36 +74,47 @@ class TestSolver {
     }
   }
 
-
-
-  
-  
+  /** Standarisation Table object contains standardization scales table in form of arrays
+   * where all scales values in scales property maps to values in Ten property (ten is standardized )
+   * 
+   * @property scales - an object containing standardization arrays for all scales for 
+   * selected Test variant. All arrays have to be the same length as the array contained
+   * by a Ten property
+   * 
+   * @property Ten - contains array 
+   */
   #standardizationTable = {
     scales: {
       prop: []
     },
     Ten: []
   }
-  setStandardizationTable() {
-    this.#standardizationTable = allStandardizationTables[this.#properties.ageGroup][this.#properties.fillingPerson]
+  SetStandardizationTable() {
+    const ageGroup = this.#properties.ageGroup;
+    const fillingPerson = this.#properties.fillingPerson;
+
+    this.#standardizationTable = ALL_STANDARDIZATION_TABLES[ageGroup][fillingPerson]
   }
   get standardizationTable() {
     return this.#standardizationTable;
   }
 
 
-  #standarizedResult = { }
-  get standarizedResult() {
-    return this.#standarizedResult;
+  #standardizedResult = { }
+  get standardizedResult() {
+    return this.#standardizedResult;
   }
-
+  /** Method to standardize single scale result
+   * 
+   * @param {string} scaleName 
+   * @param {*} singleRawResult 
+   */
   StandardizeRawResult(scaleName, singleRawResult) {
     const ageGroup = this.#properties.ageGroup
     const fillingPerson = this.#properties.fillingPerson
 
     const standardScale = this.standardizationTable.scales[scaleName] // scaleName
     const tensScale = this.standardizationTable.Ten 
-    // debugger;
 
     let index = 0; // sic!
     for (let i = 0; i < standardScale.length; i++) {
@@ -113,11 +135,44 @@ class TestSolver {
     return singleStandResult
   }
   AllStandardizeRawResults() {
+    /* TODO
+      + calculating WO 
+    */ 
+
     
     for (const key in this.#scalesRaw) {
-      this.#standarizedResult[key] = this.StandardizeRawResult(key, this.#scalesRaw[key])
+      if (Object.hasOwnProperty.call(this.#scalesRaw, key)) {
+        this.#standardizedResult[key] = this.StandardizeRawResult(key, this.#scalesRaw[key]);
+      }
     }
+
+    this.ComputeWO_Scale();
   }
+  ComputeWO_Scale() {
+        
+    if (Object.keys(this.#standardizedResult).length === 0) {     
+      throw Error("ComputeWO_Scale() method should be run after test standarisation")
+    }
+    
+    const formType = this.#properties.formType
+    let scalesWO = undefined;
+    if (formType === "form70") {
+      scalesWO = ["RSK", "NZ"]      
+    } else {
+      scalesWO = ["RSK", "NZ", "SR"]
+    }
+
+    let WO = 0;
+    console.log("\nComputeWO_Scale");
+    // console.log(this.#standardizedResult);
+    for (let i = 0; i < scalesWO.length; i++) {
+      console.log(scalesWO[i], this.#standardizedResult[scalesWO[i]]);
+      WO += this.#standardizedResult[scalesWO[i]]
+    }
+
+    this.#standardizedResult["WO"] = WO;   
+
+  };
   #formValues;
   #properties = {
     ageGroup: undefined,
@@ -210,7 +265,7 @@ console.log(JSON.stringify(testSolver.scalesRaw));
 
 console.log(testSolver.standardizationTable);
 
-console.log(testSolver.standarizedResult);
+console.log(testSolver.standardizedResult);
 
 
-// export default TestSolver
+export default TestSolver
