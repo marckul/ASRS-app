@@ -12,6 +12,11 @@ const AccordionItem = {
     const panelId = `${id}-panel`;
     const headerId = `${id}-header`;
 
+    const isCollapsed = "collapsed"
+    const ariaExpanded = false;
+    const show = ""; // or "show"
+    
+
     // const template = html`
     //   <div class="accordion-item rounded-0 border-0">
     //     <h2 id="${headerId}" class="accordion-header" >
@@ -30,10 +35,10 @@ const AccordionItem = {
     const template = html`
       <div class="accordion-item rounded-0 border-0 border-end-0">
         
-        <button class="accordion-button rounded-0 border-bottom border-1" type="button" data-bs-toggle="collapse" data-bs-target="#${panelId}" aria-expanded="true" aria-controls="${panelId}">
+        <button class="accordion-button rounded-0 border-bottom border-1 ${isCollapsed}" type="button" data-bs-toggle="collapse" data-bs-target="#${panelId}" aria-expanded="${ariaExpanded}" aria-controls="${panelId}">
             <h4 id="${headerId}" class="accordion-header" >${headerContent}</h4>
         </button>
-        <div id="${panelId}" class="accordion-collapse collapse show" aria-labelledby="${headerId}">
+        <div id="${panelId}" class="accordion-collapse collapse ${show}" aria-labelledby="${headerId}">
           <div class="accordion-body border-top-0 border-bottom border-1">
             ${bodyContent}
           </div>

@@ -263,6 +263,7 @@ class Form {
     if (groupIndex + 1 >= questionsNumber) {
       console.log(`formType: ${formName} last-question-clicked !`);
       document.querySelector(`form.${formName}`).classList.add("last-question-clicked");
+      document.querySelector("#results-table > p").textContent = "Nie wypełniono wszystkich pytań, sprawdź arkusz"
     }
   }
 
@@ -276,6 +277,8 @@ class Form {
     allLastQuestionClickedForms.forEach( (form) => {
       form.classList.remove("last-question-clicked")
     })
+
+    document.querySelector("#results-table > p").textContent = "Kiedy wypełnisz formularz, wyniki pojawią się tutaj"
     
   }
 
