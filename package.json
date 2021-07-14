@@ -7,7 +7,7 @@
   "scripts": {
     "develop": "rm -rf ./development && rm -rf ./.cache && parcel public/index.html  --out-dir development -p 3000",
     "dev": "rm -rf ./development && rm -rf ./.cache && parcel public/index.html  --out-dir development -p 3000",
-    "build": "parcel build public/index.html --out-dir dist --public-url ./",
+    "build": "parcel build public/index.html --out-dir dist --public-url ./ && cp robots.txt dist/robots.txt",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "jest": "jest --init"
   },

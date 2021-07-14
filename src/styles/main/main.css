@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,900;1,900&display=swap");
 .navbar-light {
   border-bottom: solid 0.1rem #86A8FF;
@@ -19,6 +20,61 @@
   color: #bde7f0;
 }
 
+/* =============
+  MAIN STYLES
+=============== */
+.btn-outline-primary {
+  border-radius: 0;
+  font-size: small;
+  text-transform: uppercase;
+  font-weight: bold;
+  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+          box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+  color: #2E3A59 !important;
+  border-color: #2E3A59 !important;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:active:focus {
+  background-color: #F2F7FF;
+}
+
+.btn-outline-primary:active:focus {
+  color: #55859d !important;
+  border-color: #55859d !important;
+}
+
+.btn-outline-primary:focus {
+  color: #2E3A59;
+  border-color: #2E3A59;
+}
+
+.btn-outline-primary:active:focus {
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-box-shadow: 0rem 0.15rem 0.3rem rgba(59, 158, 180, 0.5) !important;
+          box-shadow: 0rem 0.15rem 0.3rem rgba(59, 158, 180, 0.5) !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active {
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  -webkit-transform: scale(1.08);
+          transform: scale(1.08);
+  -webkit-box-shadow: 0.05rem 0.15rem 0.5rem 0rem rgba(59, 158, 180, 0.5) !important;
+          box-shadow: 0.05rem 0.15rem 0.5rem 0rem rgba(59, 158, 180, 0.5) !important;
+}
+
+.display-2, .display-3, .display-4, .display-5, .display-6 {
+  font-weight: normal;
+}
+
+/* =============
+  ICONS
+=============== */
 .my-icon {
   color: inherit;
   position: relative;
@@ -61,15 +117,27 @@
           align-items: center;
 }
 
+.success {
+  color: green;
+}
+
+.danger {
+  color: darkred;
+}
+
 /* =============
   TEXT
 =============== */
+p {
+  text-align: justify;
+}
+
 body {
   font-family: 'Lato', sans-serif !important;
   color: #2E3A59;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: 'Lato', sans-serif !important;
   font-weight: 700;
 }
@@ -86,8 +154,17 @@ section {
   margin-top: -30px;
 }
 
+section:last-child {
+  margin-bottom: 6rem;
+}
+
 body {
   position: relative;
+}
+
+.main-wrapper {
+  max-width: 50em;
+  margin: 0 auto;
 }
 
 .sidebar {
@@ -115,12 +192,11 @@ body {
 }
 
 #test-properties .title {
-  color: #ADBBE1;
+  color: #2E3A59;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   text-align: center;
-  font-weight: normal;
-  font-style: italic;
+  font-weight: bold;
   text-transform: uppercase;
   font-size: 1em;
 }
@@ -140,12 +216,20 @@ body {
 }
 
 .results-container {
-  min-height: 75vh;
+  min-height: 46em;
 }
 
 /* =================
   FORMULARZ
 ==================== */
+#test {
+  min-height: 173em;
+}
+
+form.asrs-form {
+  position: relative;
+}
+
 .asrs-form-list li {
   font-style: italic;
 }
@@ -159,6 +243,9 @@ body {
   margin-bottom: 0;
 }
 
+/* =================
+  FORM RADIO BUTTONS
+==================== */
 .asrs-radio-group {
   font-size: 1.1rem;
   display: -webkit-box;
@@ -169,6 +256,9 @@ body {
   max-width: -webkit-max-content;
   max-width: -moz-max-content;
   max-width: max-content;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
   margin-left: auto;
 }
 
@@ -178,7 +268,7 @@ body {
   padding: 0 6px;
 }
 
-.my-radio-button input[type='radio'] {
+.my-radio-button input[type="radio"] {
   display: none;
 }
 
@@ -187,22 +277,21 @@ body {
   font-weight: normal;
 }
 
-.my-radio-button label:before {
-  content: " ";
-  display: inline-block;
-  position: relative;
-  top: 5px;
-  margin: 0 5px 0 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 11px;
-  border: 2px solid #2E3A59;
-  background-color: transparent;
-}
-
 .my-radio-button input:checked + label {
   color: #0F618A;
   font-weight: bold;
+}
+
+.my-radio-button input:checked + label:hover {
+  font-weight: inherit;
+  color: #00d0ff !important;
+}
+
+.my-radio-button input:checked + label:hover:after {
+  background: #00d0ff !important;
+  top: 9px;
+  left: 4px;
+  position: absolute;
 }
 
 .my-radio-button input:checked + label:after {
@@ -221,10 +310,133 @@ body {
   border: 2px solid #7BCFE1;
 }
 
-/* */
+.my-radio-button label:hover {
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
+  color: #00d0ff !important;
+}
+
+.my-radio-button label:hover:before {
+  border: 2px solid #00d0ff !important;
+}
+
+.my-radio-button label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin: 0 5px 0 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  border: 2px solid #2E3A59;
+  background-color: transparent;
+}
+
+.asrs-radio-group:hover .my-radio-button label {
+  color: #1785ac;
+}
+
+.asrs-radio-group:hover .my-radio-button label:before {
+  border: 2px solid #1785ac;
+}
+
+.asrs-radio-group:hover .my-radio-button input:checked + label {
+  font-weight: bold;
+  color: #13739b;
+}
+
+.asrs-radio-group:hover .my-radio-button input:checked + label:after {
+  background: #1785ac;
+}
+
+.asrs-radio-group:hover .my-radio-button input:checked + label:before {
+  border: 2px solid #1785ac;
+}
+
+.asrs-radio-group.radio-group-active:hover .my-radio-button label {
+  color: #09bbca;
+}
+
+.asrs-radio-group.radio-group-active:hover .my-radio-button label:before {
+  border: 2px solid #09bbca;
+}
+
+.asrs-radio-group.radio-group-active:hover .my-radio-button input:checked + label {
+  font-weight: bold;
+  color: #0c8eaa;
+}
+
+.asrs-radio-group.radio-group-active:hover .my-radio-button input:checked + label:after {
+  background: #09bbca;
+}
+
+.asrs-radio-group.radio-group-active:hover .my-radio-button input:checked + label:before {
+  border: 2px solid #09bbca;
+}
+
+.asrs-radio-group.radio-group-active .my-radio-button label {
+  color: #0faea7;
+}
+
+.asrs-radio-group.radio-group-active .my-radio-button label:before {
+  border: 2px solid #0faea7;
+}
+
+.asrs-radio-group.radio-group-active .my-radio-button input:checked + label {
+  font-weight: bold;
+  color: #0f8799;
+}
+
+.asrs-radio-group.radio-group-active .my-radio-button input:checked + label:after {
+  background: #0faea7;
+}
+
+.asrs-radio-group.radio-group-active .my-radio-button input:checked + label:before {
+  border: 2px solid #0faea7;
+}
+
+/* =================
+  TEKST PYTAŃ
+==================== */
+.asrs-question {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.completion-icon {
+  display: none;
+  min-width: 1rem;
+}
+
+.completion-icon svg {
+  display: none;
+}
+
+/*
+*/
+.asrs-form-li.completed .asrs-question::before {
+  color: #0faea7;
+  display: inline-block;
+  content: '\2714';
+  margin-right: .5em;
+}
+
+.last-question-clicked .asrs-form-li.uncompleted .asrs-question::before, .last-question-clicked .asrs-form-li:not(.completed) .asrs-question::before {
+  color: darkred;
+  display: inline-block;
+  content: '\2718';
+  margin-right: .5em;
+}
+
 /* =================
   WYNIKI
 ==================== */
+.test-results table {
+  margin-bottom: 0;
+}
+
 .test-results tbody th {
   font-weight: normal;
 }
@@ -244,5 +456,55 @@ body {
 .test-results tbody tr > td.scale-type {
   vertical-align: middle;
   background: #fff !important;
+}
+
+/* =================
+  ELEMENTY
+==================== */
+#app-info2 {
+  font-size: 1.1rem !important;
+}
+
+#app-info2 .modal-body {
+  min-height: 50vh;
+}
+
+span.keyshortcut {
+  font-size: .9em;
+  font-weight: bold;
+  -webkit-transform: scaleY(0.9);
+          transform: scaleY(0.9);
+  display: inline-block;
+  border: .078em solid black;
+  border-radius: .2em;
+  margin: 0 .18em;
+  line-height: 1;
+  padding: 0.11em 0.5em 0.2em;
+  background: #ffffff;
+  -webkit-box-shadow: 0 .1em 0 .1em #e2e2e2,  0 .15em 0 .14em #000000,  .05em .16em .1em .14em #00000031;
+          box-shadow: 0 .1em 0 .1em #e2e2e2,  0 .15em 0 .14em #000000,  .05em .16em .1em .14em #00000031;
+}
+
+span.keyshortcut.downarrow::after, span.keyshortcut.uparrow::after {
+  display: block;
+  content: '\2794';
+}
+
+span.keyshortcut.downarrow {
+  padding: .06em .18em .25em .24em;
+}
+
+span.keyshortcut.downarrow::after {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+span.keyshortcut.uparrow {
+  padding: .06em .24em .25em .18em;
+}
+
+span.keyshortcut.uparrow::after {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
 }
 /*# sourceMappingURL=main.css.map */

@@ -1,212 +1,277 @@
 
-import TestSolver from './TestSolver'
-import * as Results from './components/Results'
+import { Form } from './FormModel'
 
-// window.ASRS = {}
 
-const getRandomValue = (lower = 0, upper = 4) => {
-  return Math.floor(Math.random()*(upper - lower + 1)) + lower;    
+const SetActive = (event) => {
+  event.preventDefault()
+  console.log("SetActive");
+  // debugger;
 }
 
+/** 
+ * 
+ * @typedef { number } integer - whole number
+ * @typedef { integer } questionIndex - -1 up to 71
+ * 
+ * @typedef { -1 | 0 | 1 | 2 | 3 | 4 } positionX 
+ * @typedef { "0" | "1" | "2" | "3" | "4" } stringQuestionValue
+ * 
+ * @typedef { 0 | 1 | 2 | 3 | 4 } questionValue
+ */
 
-class Form {
-  static ClickRouter(event) {
-    // https://www.designcise.com/web/tutorial/how-to-get-a-parent-form-element-from-a-child-input-element-using-javascript
-    
-    if (event.target.form.name === "asrs-form") {
-      this.Update(event)
-      console.log("Form: ", this.#formValues);
-      console.log("Filled Questions: ", this.#currentProps.filledQuestions);
-    } 
-    else if (event.target.form.name === "asrs-properties") {
-      this.SetProps(event)      
-      this.ClearForm(this.#currentProps.formType)
-      console.log("Hello props! Properties:\n",  this.#currentProps);
+
+class FormKeyboard {
+  static Init() {
+    for (const formName in Form.formsAttributes) {
+      if (Object.hasOwnProperty.call(Form.formsAttributes, formName)) {
+        const radioGroup = document.getElementById(`${formName}-0`)
+        radioGroup.classList.add("radio-group-active");
+      }
     }
 
-    if (this.#currentProps.filledQuestions >= this.#currentProps.questionsNumber) {
-      this.Interprete()
-    }
-
-    /* STEPS:
-      2. check if form is fullfilled
-    */ 
-
+    // Add event listener on keydown
+    document.addEventListener('keydown', (event) => {
+      this.KeydownRouter(event)
+    }, false)
   }
-  /** Only for testing purpose
-   * 
-   * @param {integer array} values 
-   * @param {boolean} random 
-   * @param {integer} number 
+  /** Function routes keyborads events and make decision what action after keydown event should be done
+   * @param {event} event - keydown keyboard event
    */
-  static ArtificialSetValues(values = [], random = false, number = 71) {
-    if (random === true) {
-      for (let i = 0; i < number; i++) {
-        values.push(getRandomValue())          
-      }
-    }   
-    
-    const formID = this.#currentProps.formType
-    const questionNum =  this.#formsAttributes[formID].questionNumber
-    // const num = Math.min(questionNum, values.length)
-    let k = 0;
+  static KeydownRouter(event) {
+    let keyName = event.key;
+    let code = event.code;
+    this.preventQuestionChange = false
 
-    for (let i = 0; i < questionNum; i++) {
-      if (i >= values.length) {
-        for (let j = 0; j < 5; j++) {
-          const radioID = `${formID}-${i}-${j}`;
-          document.getElementById(radioID).checked = false;   
-        }
-      }
-      else {
-        for (let j = 0; j < 5; j++) {
-          if (j === values[i]) {
-            this.#formValues[i] = values[i];
-
-            const radioID = `${formID}-${i}-${j}`;
-            document.getElementById(radioID).checked = true;          
-          }
-        }
-      }        
+    if (["0", "1", "2", "3", "4"].includes(keyName)) {
+      // Alert the key name and key code on keydown
+      console.log(`CHOSEN KEY: Key pressed ${keyName} \n Key code value: ${code}`);      
+      this.CheckRadio(keyName)
+      
+    } 
+    else if (["ArrowUp", "ArrowDown"].includes(keyName)) { // event.ctrlKey && 
+      this.ArrowKey(keyName);
     }
-    this.#currentProps.filledQuestions = values.length
+    else if (["ArrowLeft", "ArrowRight"].includes(keyName)) {
+      this.preventQuestionChange = true
+      this.HorizontalArrowKey(keyName);
+    } 
+    else if (["Enter"].includes(keyName)) {
+      this.ArrowKey("ArrowDown");
+    }
+    else {
+      console.log(`\nKey pressed ${keyName} \n Key code value: ${code}`);
+    }
 
   }
-  /** Method clear
-   * 
-   * @param {string} formID - form name: "form70" or "form71"
+
+  /** If set to true prevents question chenge 
+   * @type { boolean } 
    */
-  static ClearForm(formID) {
-    const questionNum =  this.#formsAttributes[formID].questionNumber
-    for (let i = 0; i < questionNum; i++) {
-      for (let j = 0; j < 5; j++) {
-        const radioID = `${formID}-${i}-${j}`;
-        document.getElementById(radioID).checked = false;
+  static #preventQuestionChange = false;
+  static get preventQuestionChange() {
+    return this.#preventQuestionChange;
+  }
+  static set preventQuestionChange(value) {
+    this.#preventQuestionChange = value;
+  }
+    
+  /** store X position (-1 to 4) on current active radio group
+   * @type { positionX }
+   */
+  static #positionX = -1;
+  static get positionX() {
+    return this.#positionX
+  }
+  static set positionX(value) {
+    this.#positionX = value; 
+    if (this.positionX < -1){
+      this.#positionX = -1;  
+    }
+    else if (this.positionX > 4){ // bylo -1
+      this.#positionX = 4;  
+    }
+  }
+  
+  /**
+   * @type { questionIndex }
+   */
+  static #focusedQuestion = 0;
+  static get focusedQuestion() {
+    return this.#focusedQuestion;
+  }
+  static set focusedQuestion(value) {
+    if (this.preventQuestionChange) {
+      return;      
+    }
+
+    const focusedQuestionPrev = this.focusedQuestion;
+    console.log("focusedQuestion value in ", value);
+
+    this.#focusedQuestion = value;
+    if (this.focusedQuestion < 0){
+      this.#focusedQuestion = 0;  
+    }
+    else if (this.focusedQuestion > Form.properties.questionsNumber) { // bylo -1
+      this.#focusedQuestion = Form.properties.questionsNumber;  
+    }
+
+    console.log("After update: ", this.focusedQuestion);
+    this.AllFocusRadioGroups(focusedQuestionPrev);
+    this.positionX = -1;
+
+  }
+  /** Method removes Radio Group Focus Class Name from previous focused question and set it to current focused question
+   * @param { questionIndex } focusedQuestionPrev - (integer) index of previous active question  
+   * 
+   * **TODO:** In fact previous question can be taken by getElementById(radioGroupFocusClassName)  */
+  static AllFocusRadioGroups(focusedQuestionPrev) {
+    for (const formName in Form.formsAttributes) {
+      FormKeyboard.FocusRadioGroup(focusedQuestionPrev, formName);
+    }
+  }
+  
+  static FocusRadioGroup(focusedQuestionPrev, formName) {
+    console.log(this.focusedQuestion);
+
+    const formID = formName;//Form.properties.formType;
+    const focusedQuestion = this.focusedQuestion;
+
+    const radioGroupPrevID = `${formID}-${focusedQuestionPrev}`;
+    const radioGroupID = `${formID}-${focusedQuestion}`;
+
+    console.log("radioGroupID", radioGroupID);
+
+
+    const radioGroupPrev = document.getElementById(radioGroupPrevID);
+    if (radioGroupPrev !== null) {
+      radioGroupPrev.classList.remove("radio-group-active");
+    }
+
+    const radioGroup = document.getElementById(radioGroupID);
+    if (radioGroup !== null) {
+      radioGroup.classList.add("radio-group-active");
+      radioGroup.focus();
+    }
+  }
+
+  /** @param { string } keyName   */
+  static ArrowKey(keyName) {
+    console.log(`ArrowKey: ctrlKey + ${keyName}`);
+    
+    if (keyName === "ArrowUp") {
+      this.focusedQuestion--
+    }
+    else if (keyName === "ArrowDown") {
+      this.focusedQuestion++
+
+    }    
+  }
+  
+  /** @param { string } keyName   */
+  static HorizontalArrowKey(keyName) {
+    const radioGroupActive = document.getElementsByClassName("radio-group-active")
+    const inputs = radioGroupActive[0].getElementsByTagName("input")
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i].checked) {
+        this.positionX = inputs[i].value
+        break;
       }
     }
-    this.#currentProps.filledQuestions = 0;
-    this.#formValues = new Array(71);
-  }
-  static #formsAttributes = {
-    "form70": {
-      questionNumber: 70,
-      ageGroups: ["2-5"],
-    },
-    "form71": {
-      questionNumber: 71,
-      ageGroups: ["6-11", "12-18"],
+
+    // RADIO GROUP POSITION X UPDATE
+    if (keyName === "ArrowLeft") {
+      this.positionX--
+    } 
+    else if (keyName === "ArrowRight") {
+      this.positionX++
     }
-  };
-  static #ageVarinats = {
-    "2-5": {
-      form: "form70",
-      questionNumber: 70,
-    },
-    "6-11": {
-      form: "form71",
-      questionNumber: 71,
-    },
-    "12-18": {
-      form: "form71",
-      questionNumber: 71,
-    },
-  };
-  
-  /* Ustawienie Ustawień */ 
-  static #currentProps = {
-    ageGroup: "2-5",
-    fillingPerson: "parent",
-    formType: "form70",
-    questionsNumber: 70,
-    filledQuestions: 0
-  };
 
-
-  
-  static get properties() {
-    return this.#currentProps
+    const artificalKeyName = this.positionX.toString();
+    console.log(artificalKeyName);
+    this.CheckRadio(artificalKeyName)        
   }
-  static SetProps({currentTarget}) {
-    // !TODO
 
-    const propName = currentTarget.name;
-    const newPropValue = currentTarget.defaultValue;
+  /** Performs a click on the question value given from the keyboard
+   * @param { stringQuestionValue } keyboardValue - an integer string
+   */
+  static CheckRadio(keyboardValue) {
+    const formID = Form.properties.formType;
+    const focusedQuestion = this.focusedQuestion
 
-    if (propName === "props-age-group" && newPropValue !== this.#currentProps.ageGroup) {
-      const previousAgeGroup = this.#currentProps.ageGroup;
-      this.#currentProps.ageGroup = newPropValue; 
-
-      // okreslic czy widok testu wymaga zmiany czy nie       
-      const currentFormType = this.#ageVarinats[previousAgeGroup].form;
-      const newFormType = this.#ageVarinats[newPropValue].form;
-      const changeFormView = currentFormType !== newFormType;
-
-      if (changeFormView) {
-        const newQuestsNumber = this.#ageVarinats[newPropValue].questionNumber;
-        const currentForm = document.getElementById(currentFormType);
-        const newForm = document.getElementById(newFormType);
-
-        // changes visibility 
-        currentForm.classList.add("d-none");
-        newForm.classList.remove("d-none");
-
-        this.#currentProps.formType = newFormType;
-        this.#currentProps.questionsNumber = newQuestsNumber;
+    keyboardValue = parseInt(keyboardValue)
+    if (keyboardValue >= 0) {
+      const radioID = `${formID}-${focusedQuestion}-${keyboardValue}`;
+      const radio = document.getElementById(radioID)
+      if (radio !== null) {
+        radio.click()  
+        radio.focus()        
       }
     } 
-    else if (propName === "props-filling-person") {
-      this.#currentProps.fillingPerson = newPropValue;      
-    }
-  } // SetProps
-
-
-  static #formValues = new Array(71);
-  static Update({currentTarget}) {
-    /* TODO
-      + add checking if all form questions are filled
-    */ 
-    const value = currentTarget.defaultValue;
-    const groupName = currentTarget.name;
-  
-    // const words = groupName.split('-')
-    const  group = document.getElementById(groupName);
-    const  groupIndex = parseInt(group.getAttribute("radio-group-index"));
-  
-    const notCheckedBefore = [undefined, null].includes(this.#formValues[groupIndex]);
-    if (notCheckedBefore) {
-      this.#currentProps.filledQuestions++;      
-    }
-    this.#formValues[groupIndex] = parseInt(value);
-  }  
-  static Interprete() {
-    // TODO connect with table
-    console.log("I'm interpreting test now..");
-    const testSolver = new TestSolver(this.#formValues, this.properties)
-
-    // console.log(testSolver.scalesRaw);
-    console.log(testSolver.standarizedResult);
-    Results.CreateResultsTable()
   }
-}
+} 
 
 
 
-const addEvents = () => {
+/** Initialize Form Events */
+const FormInit = () => {
   
   const forms = document.querySelectorAll("form");
-
-  // const clickFunction = 
-  
   forms.forEach( (form) => {
+    // debugger;
+    
+    if (form.name === "asrs-form") {
+      form.focus()
+      // console.log(" im in asrs-form");      
+    }
     const inputsAll = form.querySelectorAll("input");
     inputsAll.forEach( input => {
       input.addEventListener("click", event => {
         Form.ClickRouter(event)
       })
+    })
 
+    const buttonsAll = form.querySelectorAll("button");
+    buttonsAll.forEach( button => {
+      button.addEventListener("click", event => {
+        Form.ClickRouter(event)
+      })
+    })
+  });
+
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach( (button) => {
+    button.addEventListener("click", event => {
+      Form.ClickRouter(event)
     })
   });
 }
+
+
+const addEvents = () => {
+  // KEYBOARD SUPPORT
+  FormKeyboard.Init();
+
+  // FORM INITALIZATION
+  FormInit();
+
+  document.querySelector(".include-test-html").innerHTML = `
+    <a href="./robots.txt" class="d-block mx-auto p-5" style="max-width: max-content;">Test hello</a>
+  `
+  
+  /*
+  const allSetActiveLinks = document.querySelectorAll(".SetActive")
+  allSetActiveLinks.forEach( (setActiveLink) => {
+    setActiveLink.addEventListener("click", event => {
+      SetActive(event);
+    })
+  })
+  */ 
+
+
+}
+
+
+
 
 const appTests = (values = []) => {
   let random = false;
@@ -216,4 +281,4 @@ const appTests = (values = []) => {
   Form.ArtificialSetValues(values, random);
 }
 
-export { addEvents, appTests }
+export { addEvents, appTests, FormKeyboard }

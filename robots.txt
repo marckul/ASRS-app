@@ -1,0 +1,5 @@
+# app.com/robots.txt
+# 
+User-agent: googlebot
+Disallow: /
+Disallow: /index.html/
