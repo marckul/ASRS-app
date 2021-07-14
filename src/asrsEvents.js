@@ -1,5 +1,15 @@
 
 import { Form } from './FormModel'
+import {PlotsRenderMockup} from './components/Plots'
+// import '../../node_modules/plotly.js-dist/plotly'
+// import {Plotly} from 'plotly.js-dist/plotly'
+
+// import * as Plotly from 'plotly.js-dist';
+// import * as Plotly from 'plotly.js';
+
+
+
+
 
 
 const SetActive = (event) => {
@@ -253,6 +263,7 @@ const addEvents = () => {
 
   // FORM INITALIZATION
   FormInit();
+  PlotsRenderMockup();
 
   
   /*
@@ -263,6 +274,8 @@ const addEvents = () => {
     })
   })
   */ 
+
+
 
 
 }
@@ -276,6 +289,7 @@ const appTests = (values = []) => {
     random = true;
   }
   Form.ArtificialSetValues(values, random);
+  
 }
 
 export { addEvents, appTests, FormKeyboard }

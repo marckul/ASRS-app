@@ -2,6 +2,8 @@ import {html} from 'lit-html'
 import {ResultsTable, ResultsTableMockup} from './Results'
 import {Info} from './Info'
 import {AlertSuccess, AlertFail} from './Icons'
+import {Plot1} from './Plots'
+
 
 
 const allQuestions70 = [
@@ -235,15 +237,20 @@ const MainContent = () => {
     </div>
   </section>
   <section id="wyniki" >
-    <div  class="results-container container shadow border  rounded-3 p-5">
-      <h1>Wyniki</h1>    
-      <div id="results-table" class="test-results">
-        <p class="fst-italic fs-5">Kiedy wypełnisz formularz, wyniki pojawią się tutaj</p>
+    <div  class="results-container container shadow border  rounded-3 p-0">
+      <div class="results-table-container p-5">
+        <h1>Wyniki</h1>    
+        <div id="results-table" class="test-results">
+          <p class="fst-italic fs-5">Kiedy wypełnisz formularz, wyniki pojawią się tutaj</p>
+        </div>
       </div>
       <!-- <div id="results-table-mockup" class="test-results">
         ${ResultsTableMockup()}
       </div> -->
+      <div class="plots-container">  ${Plot1()}</div>
     </div>
+    
+
   </section>
   <!-- <section id="app-info" >
     <div  class="results-container my-5 container shadow border  rounded-3 p-5">
