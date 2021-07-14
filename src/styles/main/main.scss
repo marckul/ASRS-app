@@ -150,6 +150,14 @@
   TEXT
 =============== */
 
+
+
+
+.tab {
+  &::after {
+    content: "\00A0\00A0\00A0";
+  }
+}
 p {
   text-align: justify;
 }

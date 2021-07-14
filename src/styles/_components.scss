@@ -490,7 +490,17 @@ $markul-color-radio-active: ($markul-color-green + $markul-color-navActiveLight-
 
     
   }
+  .label {
+    text-transform: uppercase;
+    // font-weight: normal;
+  }
 }
+
+
+
+
+
+
 
 
 

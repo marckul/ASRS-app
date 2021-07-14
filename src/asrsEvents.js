@@ -254,9 +254,6 @@ const addEvents = () => {
   // FORM INITALIZATION
   FormInit();
 
-  document.querySelector(".include-test-html").innerHTML = `
-    <a href="./robots.txt" class="d-block mx-auto p-5" style="max-width: max-content;">Test hello</a>
-  `
   
   /*
   const allSetActiveLinks = document.querySelectorAll(".SetActive")
