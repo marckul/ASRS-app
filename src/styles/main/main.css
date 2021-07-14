@@ -128,6 +128,10 @@
 /* =============
   TEXT
 =============== */
+.tab::after {
+  content: "\00A0\00A0\00A0";
+}
+
 p {
   text-align: justify;
 }
@@ -456,6 +460,10 @@ form.asrs-form {
 .test-results tbody tr > td.scale-type {
   vertical-align: middle;
   background: #fff !important;
+}
+
+.test-results .label {
+  text-transform: uppercase;
 }
 
 /* =================

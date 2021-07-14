@@ -78,8 +78,18 @@ const ResultsTableMockup = () => {
 
 
 
+/**
+ * 
+ * @param {*} typeName 
+ * @param { TestSolver } testSolver 
+ * @param {*} typeScalesNames 
+ */
+const RowsGroup = (typeName, testSolver, typeScalesNames) => {
 
-const RowsGroup = (typeName, { scalesRaw, standardizedResults, allClassificationResults }, typeScalesNames) => {
+  const scalesRaw = testSolver.allScalesRaw
+  const standardizedResults = testSolver.allStandardizedResults
+  const allClassificationResults = testSolver.allClassificationResults
+  
   const template = [];
   const scaleName = typeScalesNames[0];
 
@@ -109,6 +119,7 @@ const RowsGroup = (typeName, { scalesRaw, standardizedResults, allClassification
   return template
 }
 
+
 const ResultsTable = (formValues, properties) => {
   let scalesTypes = {
     asrsScales: [],
@@ -136,13 +147,8 @@ const ResultsTable = (formValues, properties) => {
     teacher: "Opiekun"
   }
 
-  console.log(testSolver.allScalesRaw);
-  console.log(testSolver.allStandardizedResults);
-  console.log(testSolver.allClassificationResults);
-  
-
   const template = html`
-    <p class="h5 mt-5 mb-3">Grupa wiekowa: ${testSolver.properties.ageGroup}, Osoba wypełniająca: ${fillingPerson[testSolver.properties.fillingPerson]}</p>
+    <p class="h5 mt-5 mb-3">Wariant: <small class="label">&emsp; ${testSolver.properties.ageGroup} lat, &nbsp; ${fillingPerson[testSolver.properties.fillingPerson]}</small></p>
     <table class="result-table table">
       <thead>
         <tr>
