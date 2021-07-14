@@ -2,6 +2,9 @@ import {html} from 'lit-html'
 
 import { HelpSVG, BarChartSVG, EditSVG } from '../components/Icons'
 
+
+
+
 const Navbar = () => {
   const template = html`
     <nav id="main-navbar" class="navbar navbar-expand-md navbar-dark bg-dark shadow border-bottom ">
@@ -18,8 +21,8 @@ const Navbar = () => {
             <li class="nav-item">
               <a class="nav-link" href="#wyniki">${BarChartSVG}Wyniki</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#app-info">${HelpSVG}Info</a>
+            <li class="nav-item SetActive" data-bs-toggle="modal" data-bs-target="#appInfoModal" >
+              <a class="nav-link" href="#">${HelpSVG}Info</a>
             </li>
           </ul>
         </div>

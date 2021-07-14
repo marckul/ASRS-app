@@ -1,7 +1,34 @@
-import allStandardizationTables from './all-standardization-tables'
+import ALL_STANDARDIZATION_TABLES from './app-data/all-standardization-tables'
+import CLASSIFICATION_TABLE from './app-data/classification-table'
+import {ALL_SCALES_INDEXES, REVERSE} from './app-data/test-solver-data'
 
+// allStandardizationTables
+
+/* TODO 06.07.2021
+  OBLICZANIE WO 
+  OBLICZANIE KLASYFIKACJI
+  WPISYWANIE DO TABELI 
+*/ 
+
+
+/**
+ * @typedef { number[] } numericArray
+ * @typedef { { key1: numericArray, [...] , keyN: numericArray } } allScalesArrays
+ * @typedef { { scaleName1: number, scaleNameN: number } } allScalesValues
+ * 
+ * @typedef { string } scaleName1
+ * @typedef { string } scaleNameN
+ * 
+ * @typedef { "Bardzo wysoki" | "Wysoki" | "Podwyższony" | "Przeciętny" | "Niski" } levelValue
+ */
+
+
+/**
+ * @alias testSolver
+ */
 class TestSolver {
-  /**
+  /** TestSolver returns new testSolver instance with solved test results. 
+   * Results contains: Raw Results (allScalesRaw), Standardized Results and Classification Results
    * 
    * @param {number[]} formValues - form values given by a form of a integer number array
    * @param {object} formProperties - form properties object (property of Form class)
@@ -21,15 +48,26 @@ class TestSolver {
     this.#formValues = formValues
     this.#properties = { ageGroup, fillingPerson, formType, questionsNumber }
 
-    this.AllSolveRaw()
-    this.setStandardizationTable()
+    this.SetStandardizationTable(ALL_STANDARDIZATION_TABLES);
+    this.SetClassificationTable(CLASSIFICATION_TABLE);
+
+
+    this.AllSolveRaw();
     this.AllStandardizeRawResults();
+    this.ComputeWO_Scale();
+    this.AllResultsClassify();
+    
   }
-  /** */
-  #scalesRaw = { }
-  get scalesRaw() {
-    return this.#scalesRaw
+  
+  /** Object contains integer values of scales result value  for each scale.
+   * @type { { scaleName1: number, [...], scaleNameN: number } }
+  */
+  #allScalesRaw = { }
+  /** Returns allScalesRaw object contains integer values of scales result value  */
+  get allScalesRaw() {
+    return this.#allScalesRaw
   }
+
   SolveRaw(scaleIndexes) {
     Object.freeze(scaleIndexes);
     const max = 4; // maximum points in question scale
@@ -50,167 +88,195 @@ class TestSolver {
    * 
    */
   AllSolveRaw() {
-    
     const formType = this.#properties.formType;
-    const allScalesIndexes = this.#allScalesIndexes["form70"]
+    const allScalesIndexes = this.#allScalesIndexes[formType]
 
     Object.freeze(allScalesIndexes);
 
     for (const key in allScalesIndexes) {
       const scaleIndexes = allScalesIndexes[key]
       const scaleResult = this.SolveRaw(scaleIndexes)
-      this.#scalesRaw[key] = scaleResult;     
+      this.#allScalesRaw[key] = scaleResult;     
     }
+    // Object.freeze(this.#allScalesRaw); // sic!
   }
 
-
-
-  
-  
+  /** Standarisation Table object contains standardization scales table in form of arrays
+   * where all scales values in scales property maps to values in Ten property (ten is standardized )
+   * 
+   * @property scales - an object containing standardization arrays for all scales for 
+   * selected Test variant. All arrays have to be the same length as the array contained
+   * by a Ten property
+   * 
+   * @property Ten - contains array 
+   */
   #standardizationTable = {
     scales: {
       prop: []
     },
     Ten: []
   }
-  setStandardizationTable() {
-    this.#standardizationTable = allStandardizationTables[this.#properties.ageGroup][this.#properties.fillingPerson]
+  SetStandardizationTable(ALL_STANDARDIZATION_TABLES) {
+    const ageGroup = this.#properties.ageGroup;
+    const fillingPerson = this.#properties.fillingPerson;
+
+    this.#standardizationTable = ALL_STANDARDIZATION_TABLES[ageGroup][fillingPerson]
   }
   get standardizationTable() {
     return this.#standardizationTable;
   }
-
-
-  #standarizedResult = { }
-  get standarizedResult() {
-    return this.#standarizedResult;
+  
+  #classificationTable = {
+    Ten: [],
+    classification: [],
+  }
+  SetClassificationTable(CLASSIFICATION_TABLE) {
+    this.#classificationTable = CLASSIFICATION_TABLE;
+  }
+  get classificationTable() {
+    return this.#classificationTable;
   }
 
-  StandardizeRawResult(scaleName, singleRawResult) {
-    const ageGroup = this.#properties.ageGroup
-    const fillingPerson = this.#properties.fillingPerson
+  /** Object contains integer values of scales result standardized value for each scale.
+   * @type { { scaleName1: number, [...], scaleNameN: number } }
+   */
+  #allStandardizedResults = { }
+  get allStandardizedResults() {
+    return this.#allStandardizedResults;
+  }
 
-    const standardScale = this.standardizationTable.scales[scaleName] // scaleName
-    const tensScale = this.standardizationTable.Ten 
-    // debugger;
-
+  /** StandardizationTableMapper method maps source value (originValue) to new value that corresponds to originValue by given mappedValuesArray
+   * 
+   * @param { integer } originValue - value to map to new value from mappedValuesArray
+   * @param { integer[] } originMappingArray - values which from originValue 
+   * comes from. 
+   * Array should contains only maximum value from mapping ranges. Array **can** contains nulls
+   *  
+   * @param { array } mappedValuesArray - values that originValue is mapping to
+   * Array should contains only maximum value from mapping ranges. Array **cannot** contains nulls
+   * 
+   * @returns mappedValue - value after mapping 
+   */
+  StandardizationTableMapper(originValue, originMappingArray, mappedValuesArray) {
     let index = 0; // sic!
-    for (let i = 0; i < standardScale.length; i++) {
-      const resultMapper = standardScale[i];
+    for (let i = 0; i < originMappingArray.length; i++) {
+      const resultMapper = originMappingArray[i];
       if (!resultMapper) {
         continue;
       }
 
-      if (singleRawResult > resultMapper) {
+      if (originValue > resultMapper) {
         break;
       } 
       else {
         index = i;    
       }      
     }
-    const singleStandResult = tensScale[index];
+    return mappedValuesArray[index];    
+  }
+  /** Method to standardize **single** scale result
+   * 
+   * @param {string} scaleName 
+   * @param {*} singleRawResult 
+   */
+  StandardizeRawResult(scaleName, singleRawResult) {
+    // const ageGroup = this.#properties.ageGroup
+    // const fillingPerson = this.#properties.fillingPerson
+
+    const standardScale = this.standardizationTable.scales[scaleName] // scaleName
+    const tensScale = this.standardizationTable.Ten 
+    const singleStandResult = this.StandardizationTableMapper(singleRawResult, standardScale, tensScale);
 
     return singleStandResult
   }
   AllStandardizeRawResults() {
+    /* TODO
+      + calculating WO 
+    */ 
+
     
-    for (const key in this.#scalesRaw) {
-      this.#standarizedResult[key] = this.StandardizeRawResult(key, this.#scalesRaw[key])
+    for (const key in this.#allScalesRaw) {
+      if (Object.hasOwnProperty.call(this.#allScalesRaw, key)) {
+        this.#allStandardizedResults[key] = this.StandardizeRawResult(key, this.#allScalesRaw[key]);
+      }
+    }
+
+    
+  }
+  ComputeWO_Scale() {
+        
+    if (Object.keys(this.#allStandardizedResults).length === 0) {     
+      throw Error("ComputeWO_Scale() method should be run after test standarisation")
+    }
+    
+    const formType = this.#properties.formType
+    let scalesWO = undefined;
+    if (formType === "form70") {
+      scalesWO = ["RSK", "NZ"]      
+    } else {
+      scalesWO = ["RSK", "NZ", "SR"]
+    }
+
+    let WO = 0;
+    // console.log("\nComputeWO_Scale");
+    // console.log(this.#standardizedResults);
+    for (let i = 0; i < scalesWO.length; i++) {
+      // console.log(scalesWO[i], this.#allStandardizedResults[scalesWO[i]]);
+      WO += this.#allStandardizedResults[scalesWO[i]]
+    }
+
+    this.#allScalesRaw["WO"] = WO;   
+    Object.freeze(this.#allScalesRaw);
+
+    this.#allStandardizedResults["WO"] = this.StandardizeRawResult("WO", WO);
+    Object.freeze(this.#allStandardizedResults);
+  };
+
+  /** Object contains integer values of classification (level value) for each scale.
+   * @type { { scaleName1: levelValue, [...], scaleNameN: levelValue } }
+   */
+  #allClassificationResults = {};
+  get allClassificationResults() {
+    return this.#allClassificationResults;
+  }
+  /** Classifies standardized results for all scales  */
+  AllResultsClassify() {
+    const allStandardizedResults = this.allStandardizedResults;
+    const allClassificationResults = [];
+    
+    // Object.freeze(allStandardizedResults) sic!
+
+    for (const scaleName in allStandardizedResults) {
+      if (Object.hasOwnProperty.call(allStandardizedResults, scaleName)) {
+        const standardizedResult = allStandardizedResults[scaleName];
+        const classification = this.StandardizationTableMapper(standardizedResult, this.classificationTable.Ten, this.classificationTable.classification)
+        
+        this.#allClassificationResults[scaleName] = classification;
+      }      
     }
   }
   #formValues;
+  /** 
+   * 
+  */
   #properties = {
     ageGroup: undefined,
     fillingPerson: undefined,
     formType: undefined,
     questionsNumber: undefined,
   };
+  get properties() {
+    return this.#properties;
+  }
+  /** The object contains 2 arrays of integers, each for one form variant. 
+   * Each table contains 1 for inverted questions, and 0 for non-inverted 
+   * questions */
+  #reverse = REVERSE;
 
-
-
-  #template = {
-    Age_2_5: {   
-
-    },
-    Age_6_11:{ 
-
-    },
-    Age_12_18:{ 
-
-    }
-  };
-
-
-
-  #reverse = { 
-    // GRUPA 6-11 i 12-18 ma taki sam układ skal i odwracalność różni się tylko interpretacja wyników pomiędzy tymi grupami wiekowymi
-    form70: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 
-             1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 
-             0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 
-             1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-
-    form71: [0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 
-             0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 
-             0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 
-             1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
-  };
-  #allScalesIndexes = { // 
-    form70: { 
-      RSK: [0, 2, 3, 4, 6, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 24, 27, 28, 29, 31, 32, 34, 35, 36, 37, 39, 42, 43, 53, 54, 48, 49, 50, 51, 56, 60, 61, 62, 66], 
-      NZ: [1, 7, 8, 9, 10, 11, 19, 25, 26, 38, 40, 41, 44, 45, 46, 47, 52, 55, 59, 63, 64, 68, 69], 
-      DSM: [0, 2, 3, 4, 7, 8, 9, 10, 12, 13, 15, 17, 18, 19, 20, 25, 27, 28, 37, 38, 39, 40, 41, 42, 46, 47, 49, 50, 52, 53, 55, 60, 63, 64, 69], 
-      RR: [3, 14, 23, 29, 39, 48, 50, 51, 60], 
-      RD: [20, 22, 30, 32, 43], 
-      WSE: [0, 2, 4, 12, 13, 15, 18, 35, 37, 42, 49, 53], 
-      NJ: [5, 21, 41, 58, 52, 69], 
-      ST: [10, 38, 46, 63, 64, 67], 
-      SZ: [7, 8, 9, 19, 26, 47, 55, 59], 
-      WS: [1, 11, 44, 45, 65, 68], 
-      US: [16, 24, 31, 33, 36, 54, 56, 57, 61, 62] 
-    },
-    form71: { 
-      RSK: [2, 3, 7, 8, 11, 22, 27, 30, 31, 32, 38, 41, 42, 44, 54, 55, 60, 68, 69], 
-      NZ: [1, 12, 16, 19, 20, 21, 23, 24, 25, 26, 28, 37, 39, 45, 47, 48, 49, 50, 53, 61, 62, 64, 66, 67], 
-      SR: [0, 4, 5, 6, 15, 17, 29, 33, 34, 35, 43, 51, 56, 57, 59, 65, 70], 
-      DSM: [7, 8, 10, 12, 14, 18, 19, 20, 22, 23, 25, 27, 30, 31, 32, 36, 38, 41, 42, 45, 47, 48, 49, 50, 60, 62, 64, 66, 68, 69], 
-      RR: [2, 13, 18, 30, 44, 49, 63, 68, 69], 
-      RD: [17, 32, 33, 36, 58, 65], 
-      WSE: [3, 7, 8, 10, 14, 27, 31, 38, 40, 41, 42, 54, 60], 
-      NJ: [16, 19, 20, 25, 57, 67], 
-      ST: [45, 47, 52, 53, 66], 
-      SZ: [12, 21, 23, 39, 48, 50, 62, 64], 
-      WS: [1, 24, 26, 28, 37, 61], 
-      UW: [0, 4, 9, 15, 29, 33, 34, 43, 46, 51, 56], 
-    }
-  };
-  get allScalesIndexes() {
-    return this.#allScalesIndexes
-  };
-
+  /** The object contains array for each key. Each array contains indexes 
+   * indicating which questions are taking to compute each scale result value */
+  #allScalesIndexes = ALL_SCALES_INDEXES;
 }
 
-//  ["RSK", "NZ", "DSM", "RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
 
-
-
-const testSolver = new TestSolver(
-  [2, 2, 1, 2, 4, 4, 3, 4, 0, 2, 0, 2, 2, 2, 2, 3, 1, 4, 2, 1, 4, 3, 3, 0, 4, 1, 3, 1, 4, 0, 1, 2, 0, 4, 4, 1, 0, 0, 2, 3, 1, 3, 4, 2, 2, 3, 0, 3, 1, 0, 1, 1, 4, 4, 0, 0, 3, 3, 3, 3, 0, 1, 3, 2, 0, 4, 3, 3, 3, 3, null],
-  {
-    ageGroup: "2-5",
-    fillingPerson: "parent",
-    formType: "form70",
-    questionsNumber: 70,
-    filledQuestions: 70
-  }
-);
-
-
-console.log(JSON.stringify(testSolver.scalesRaw));
-
-
-console.log(testSolver.standardizationTable);
-
-console.log(testSolver.standarizedResult);
-
-
-// export default TestSolver
+export default TestSolver

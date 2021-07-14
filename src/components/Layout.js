@@ -22,6 +22,7 @@ const Layout = () => {
         </div>
         <div class="col-md-9 ms-md-auto main-content" id="main-content">
           ${MainContent()}
+          
         </div>
       </div>
     </div>

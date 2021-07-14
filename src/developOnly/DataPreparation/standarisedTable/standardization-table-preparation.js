@@ -201,8 +201,6 @@ const StandardizationTablePrep0 = function(allScales, {ageGroup, fillingPerson, 
 
 
 const StandardizationTablePreparation = function(allStandarizationTables, {ageGroup, fillingPerson}) {
-  
-
   console.log(`\n\n\n%c
     _______________________________________
 

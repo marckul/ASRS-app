@@ -2,13 +2,29 @@
 
 
 
+$markul-color-primaryLight: #ADBBE1;
+$markul-color-primary: #336CFB;
+
+$markul-color-primaryDark: #2E3A59;
+$markul-color-primaryDark-hover: ($markul-color-primary + $markul-color-primaryDark) / 2;
+$markul-color-primaryDarker: #0E111B;
+
+$markul-color-secondary: #86A8FF;
+
+$markul-color-navActive: #0F618A;
+$markul-color-navActiveLight-pure: #00d0ff;
+$markul-color-navActiveLight: #7BCFE1;
+$markul-color-radioActive: #86A8FF;
+
+$markul-color-snow: #F2F7FF;
+$markul-color-grey: #ECF3FD;
+$markul-color-activeLight: #7BCFE1;
+
+$markul-color-green: rgb(0, 255, 157);
+$markul-color-success: green;
+$markul-color-danger: darkred;
 
 
 
 
-
-
-
-
-
-
+$markul-color-logo: $markul-color-navActive;
