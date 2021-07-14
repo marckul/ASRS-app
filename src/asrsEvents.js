@@ -1,5 +1,9 @@
 
 import { Form } from './FormModel'
+// import {PlotsRenderMockup} from './components/Plots'
+
+
+
 
 
 const SetActive = (event) => {
@@ -254,17 +258,8 @@ const addEvents = () => {
   // FORM INITALIZATION
   FormInit();
 
-  
-  /*
-  const allSetActiveLinks = document.querySelectorAll(".SetActive")
-  allSetActiveLinks.forEach( (setActiveLink) => {
-    setActiveLink.addEventListener("click", event => {
-      SetActive(event);
-    })
-  })
-  */ 
-
-
+  // PLOTS RENDERING
+  // PlotsRenderMockup();
 }
 
 

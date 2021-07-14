@@ -24,6 +24,8 @@
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "bootstrap": "^5.0.1",
-    "lit-html": "^1.4.1"
+    "lit-html": "^1.4.1",
+    "plotly.js": "^2.2.1",
+    "plotly.js-dist": "^2.2.1"
   }
 }
