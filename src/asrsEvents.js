@@ -1,12 +1,6 @@
 
 import { Form } from './FormModel'
-import {PlotsRenderMockup} from './components/Plots'
-// import '../../node_modules/plotly.js-dist/plotly'
-// import {Plotly} from 'plotly.js-dist/plotly'
-
-// import * as Plotly from 'plotly.js-dist';
-// import * as Plotly from 'plotly.js';
-
+// import {PlotsRenderMockup} from './components/Plots'
 
 
 
@@ -263,21 +257,9 @@ const addEvents = () => {
 
   // FORM INITALIZATION
   FormInit();
-  PlotsRenderMockup();
 
-  
-  /*
-  const allSetActiveLinks = document.querySelectorAll(".SetActive")
-  allSetActiveLinks.forEach( (setActiveLink) => {
-    setActiveLink.addEventListener("click", event => {
-      SetActive(event);
-    })
-  })
-  */ 
-
-
-
-
+  // PLOTS RENDERING
+  // PlotsRenderMockup();
 }
 
 
@@ -289,7 +271,6 @@ const appTests = (values = []) => {
     random = true;
   }
   Form.ArtificialSetValues(values, random);
-  
 }
 
 export { addEvents, appTests, FormKeyboard }

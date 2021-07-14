@@ -2,8 +2,7 @@ import {html} from 'lit-html'
 import {ResultsTable, ResultsTableMockup} from './Results'
 import {Info} from './Info'
 import {AlertSuccess, AlertFail} from './Icons'
-import {Plot1} from './Plots'
-
+// import {Plot1} from './Plots'
 
 
 const allQuestions70 = [
@@ -247,19 +246,10 @@ const MainContent = () => {
       <!-- <div id="results-table-mockup" class="test-results">
         ${ResultsTableMockup()}
       </div> -->
-      <div class="plots-container">  ${Plot1()}</div>
     </div>
     
 
   </section>
-  <!-- <section id="app-info" >
-    <div  class="results-container my-5 container shadow border  rounded-3 p-5">
-      <h1>Info</h1>    
-      <div class="app-info">
-        <p class="fst-italic fs-5">Tutaj wpisz informacje na temat aplikacji</p>
-      </div>
-    </div>
-  </section> -->
   <section id="app-info2" >
     ${Info()}
   </section>
