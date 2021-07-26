@@ -165,10 +165,12 @@ const CompletionIcons = () => {
 }
 
 
+
 const RadioGroup = (name = "name", number = 0, question = "Pytanie") => {
   return(html`
     <li class="asrs-form-li ${name} uncompleted">
       <div class="row asrs-form-row">
+
         <p class="asrs-question col">
           ${CompletionIcons()}
           ${question}
@@ -236,10 +238,11 @@ const MainContent = () => {
     </div>
   </section>
   <section id="wyniki" >
+    
     <div  class="results-container container shadow border  rounded-3 p-0">
       <div class="results-table-container p-5">
         <h1>Wyniki</h1>    
-        <div id="results-table" class="test-results">
+        <div id="results-table" class="test-results table-responsive">
           <p class="fst-italic fs-5">Kiedy wypełnisz formularz, wyniki pojawią się tutaj</p>
         </div>
       </div>

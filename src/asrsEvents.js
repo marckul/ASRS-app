@@ -1,5 +1,6 @@
 
 import { Form } from './FormModel'
+import { PropsSVG, ArrowLeft } from './components/Icons'
 // import {PlotsRenderMockup} from './components/Plots'
 
 
@@ -251,6 +252,74 @@ const FormInit = () => {
 }
 
 
+/**
+ * 
+ * @param { Event } event 
+ */
+const CollapseSidebar0 = event => {
+  event.preventDefault()
+  
+  console.log(event);
+
+  
+  const propsSidebar = document.getElementById("props-sidebar");
+  // debugger;
+  if ( propsSidebar.classList.contains("collapsed") ) {
+    propsSidebar.classList.remove("collapsed")
+    event.target.innerText = "Zwiń"
+    
+  } else {
+    propsSidebar.classList.add("collapsed")    
+    event.target.innerText = "Ustawienia"
+  }
+}
+
+class CollapseSidebar {
+  constructor() { 
+    
+  }
+  #innerContentOff = `
+    ${PropsSVG.getHTML()}
+  `;
+  get innerContentOff() {
+    return this.#innerContentOff;
+  }
+  #innerContentOn = `
+    <div class="me-1">Zwiń</div>
+    ${ArrowLeft.getHTML()}
+  `
+  Switch(event) {
+    event.preventDefault()
+  
+    console.log("CollapseSidebar");
+    // debugger;
+  
+    
+    const propsSidebar = document.getElementById("props-sidebar");
+    // console.log(event.currentTarget);
+    // debugger;
+    if ( propsSidebar.classList.contains("collapsed") ) {
+      propsSidebar.classList.remove("collapsed")
+      event.currentTarget.innerHTML = this.#innerContentOn
+      
+    } else {
+      
+      propsSidebar.classList.add("collapsed")    
+      event.currentTarget.innerHTML = this.#innerContentOff
+    }
+
+  }
+}
+
+const CollaseSidebarInit = () => {
+  const collapseButton = document.querySelector("#asrs-logo > .sidebar-collapse-button")
+  const collapseSidebar = new CollapseSidebar();
+  collapseButton.addEventListener("click", event => {
+    collapseSidebar.Switch(event);
+  })
+}
+
+
 const addEvents = () => {
   // KEYBOARD SUPPORT
   FormKeyboard.Init();
@@ -260,6 +329,8 @@ const addEvents = () => {
 
   // PLOTS RENDERING
   // PlotsRenderMockup();
+            
+  CollaseSidebarInit();
 }
 
 
