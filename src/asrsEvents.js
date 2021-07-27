@@ -252,32 +252,26 @@ const FormInit = () => {
 }
 
 
-/**
- * 
- * @param { Event } event 
- */
-const CollapseSidebar0 = event => {
-  event.preventDefault()
-  
-  console.log(event);
-
-  
-  const propsSidebar = document.getElementById("props-sidebar");
-  // debugger;
-  if ( propsSidebar.classList.contains("collapsed") ) {
-    propsSidebar.classList.remove("collapsed")
-    event.target.innerText = "Zwiń"
-    
-  } else {
-    propsSidebar.classList.add("collapsed")    
-    event.target.innerText = "Ustawienia"
-  }
-}
 
 class CollapseSidebar {
-  constructor() { 
+  constructor( $collapeBtn, $showBtn ) { 
+    this.#$showBtn = $showBtn
+    this.#$collapeBtn = $collapeBtn
     
   }
+
+  /** @type {string} */
+  #$collapeBtn = '';
+  get $collapeBtn() {
+    return this.#$collapeBtn
+  }
+
+  /** @type {string} */
+  #$showBtn = '';
+  get $showBtn() {
+    return this.#$showBtn
+  }
+
   #innerContentOff = `
     ${PropsSVG.getHTML()}
   `;
@@ -288,34 +282,51 @@ class CollapseSidebar {
     <div class="me-1">Zwiń</div>
     ${ArrowLeft.getHTML()}
   `
-  Switch(event) {
+  Collapse(event) {
     event.preventDefault()
   
-    console.log("CollapseSidebar");
-    // debugger;
-  
+    console.log("Collapse Sidebar");
+    // debugger;  
     
     const propsSidebar = document.getElementById("props-sidebar");
-    // console.log(event.currentTarget);
-    // debugger;
-    if ( propsSidebar.classList.contains("collapsed") ) {
-      propsSidebar.classList.remove("collapsed")
-      event.currentTarget.innerHTML = this.#innerContentOn
-      
-    } else {
-      
+
+    if ( !propsSidebar.classList.contains("collapsed") ) {
       propsSidebar.classList.add("collapsed")    
-      event.currentTarget.innerHTML = this.#innerContentOff
-    }
+    } 
+    document.querySelector(this.$showBtn).classList.remove("show")
+
+  }
+  /**
+   * @param {Event} event 
+   */
+  Show(event) {
+    event.preventDefault()
+
+    console.log("Show Sidebar");
+    const propsSidebar = document.getElementById("props-sidebar");
+
+    if ( propsSidebar.classList.contains("collapsed") ) {
+      propsSidebar.classList.remove("collapsed")    
+    } 
+    document.querySelector(this.$showBtn).classList.add("show")    
+
 
   }
 }
 
 const CollaseSidebarInit = () => {
   const collapseButton = document.querySelector("#asrs-logo > .sidebar-collapse-button")
-  const collapseSidebar = new CollapseSidebar();
+  const collapseSidebar = new CollapseSidebar(
+    "#asrs-logo > .sidebar-collapse-button",
+    "#props-sidebar > button.sidebar-show-button"
+  );
   collapseButton.addEventListener("click", event => {
-    collapseSidebar.Switch(event);
+    collapseSidebar.Collapse(event);
+  })
+
+  const showButton = document.querySelector("#props-sidebar > button.sidebar-show-button")
+  showButton.addEventListener("click", event => {
+    collapseSidebar.Show(event);
   })
 }
 

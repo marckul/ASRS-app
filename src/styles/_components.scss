@@ -6,104 +6,46 @@ $markul-color-navActiveLight-pure: #00d0ff;
 $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
 .sidebar {
   position: fixed;
-  z-index: 100;
+  z-index: 500;
   top: 60px;
   left: 0;
   bottom: 0;
   overflow-y: auto;
-
-
-
-  // overflow-x: hidden;
-
   background-color: $markul-color-sidebar;
-  // margin-top: 56px; // padding-top: 56px;
+
   .accordion-item, .accordion-header, .accordion-button {
     background: transparent !important;
     color: inherit;
   }
   .accordion-button:not(.collapsed) {
     box-shadow: none !important;
-  }
-
-  
-  
+  }  
 }
 
-// .sidebar {
-//   #asrs-logo {
-//     position: relative;
-//   }
-
-//   // background-color: red;
-//   .sidebar-collapse-button {
-//     display: none;
-//     margin: 1rem;
-
-//     position: absolute;
-//     right: 0;
-//     top: 0;
-//   }
-  
-//   @media (max-width: $mediumScreenSize) {
-//     // transition-property:  width, right, opacity, display; 
-//     // transition-duration: 2s, 0s, 2s, 2s;
-//     // transition-delay: 5s, 0, 0, 0;
-//     // transition: width 2s 5s, right 0s, opacity 2s, display 2s; 
-
-//     .sidebar-collapse-button {
-//       display: block;
-//     }
-
-//     $dt: .2s;
-//     &.collapsed {
-//       transition: width $dt, right $dt, opacity $dt, display $dt; 
-//       * :not(.sidebar-collapse-button) {
-//         display: none;
-//         opacity: 0;
-//       }
-//       width: 0;
-//       .sidebar-collapse-button {
-//         right: -8rem;    
-//         background-color: white;   
-//       }
-//     }
-//     &:not(.collapsed) {
-//       transition: width $dt, right $dt, opacity $dt 2s, display $dt; 
-
-//       * :not(.sidebar-collapse-button) {
-//         opacity: 1;
-//       }
-//       width: 80%;
-
-//     }
-//   }
-// }
 
 // SIDEBAR COLLAPSING
 
+
+
+$collapseBreakpoint: ($largeScreenSize - 1);
 .sidebar {
-  transition: left .5s;
+  
   #asrs-logo {
     position: relative;
   }
 
-  // background-color: red;
   .sidebar-collapse-button {
     display: none;
     padding: 1em;
     position: absolute;
     right: 0;
     top: 0;
-    // position: fixed;
-    // right: 50px;
-    // top: 200px;
-    
   }
-  
-  @media (max-width: $mediumScreenSize) {
-    $sidebarWidth: 90%;
-    width: $sidebarWidth;
+
+  @media (max-width: $collapseBreakpoint) {
+    transition: left .8s !important;
+    $sidebarWidth: 25em;
+    max-width: $sidebarWidth;
 
     .sidebar-collapse-button {
       display: flex;
@@ -111,20 +53,34 @@ $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
       align-items: center;
     }    
     &.collapsed {
-      left: -$sidebarWidth;
-      // .sidebar-collapse-button {
-      //   right: -5em;    
-      // }
+      transition: left 1.1s !important;
+      left: -($sidebarWidth*1.2);
+
+
+
+
     }
   }
 }
-@media (max-width: $mediumScreenSize) {
-  .sidebar-show-button {
+
+
+
+.sidebar-show-button {
+  display: none;
+  @media (max-width: $collapseBreakpoint) {
+    display: inline-block;
     position: fixed;
     bottom: 1em;
     right: 1em;
-    
 
+    transition-property: opacity, visibility;//, display 0s 5s;
+    transition-duration: 1s;
+
+    &.show {
+      opacity: 0;
+      // display: none;
+      visibility: hidden;
+    }
   }
 }
 
@@ -194,7 +150,7 @@ $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
 
 
 }
-@media screen and (max-width: $mediumScreenSize) {
+@media screen and (max-width: $collapseBreakpoint) {
   .asrs-form-container, .results-container {
     // margin: 0;  
     width: 100% !important;
@@ -205,7 +161,7 @@ $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
 
 @media screen and (max-width: $smallScreenSize) {
   .asrs-form-container { 
-    padding: 5em !important;
+    padding: 3em !important;
   }
   .results-container {
     padding: 0 !important;
@@ -215,9 +171,14 @@ $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
   }
 
   .asrs-form-list {
-    padding-left: 0;
+    padding-left: 1em;
     padding-right: 0;
+    margin-left: auto;
+    .asrs-form-li {
+      margin-left: auto;
+    }
   }
+  
 }
 
 
@@ -256,7 +217,7 @@ $markul-color-group-hover: $markul-color-navActiveLight-pure;
   min-width: max-content;
   margin-left: auto;
 
-  @media screen and (max-width: $mediumScreenSize) {
+  @media screen and (max-width: $collapseBreakpoint) {
     margin-left: 0;
   }
 
