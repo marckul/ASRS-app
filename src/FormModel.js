@@ -1,6 +1,6 @@
 
 import TestSolver from './TestSolver'
-import {FormKeyboard} from './asrsEvents'
+import { FormKeyboard } from './FormKeyboard'
 
 import * as Results from './components/Results'
 
@@ -247,10 +247,10 @@ class Form {
    * @param { string } groupName - radio group name  
    * @param { string } groupIndex - radio group index 
    * @param { formName } formName 
-   * @param { numberOfQuestions } questionsNumber 
+   * @param { numberOfQuestions } totalQuestionsNumber 
    */
-  static SingleAddCompletedClass(formName, groupIndex, questionsNumber) {
-    if (groupIndex < questionsNumber) {
+  static SingleAddCompletedClass(formName, groupIndex, totalQuestionsNumber) {
+    if (groupIndex < totalQuestionsNumber) {
       const selector = `.asrs-form-li.${formName}-${groupIndex}`;
       const clickedQuestion = document.querySelector(selector)
 
@@ -259,8 +259,9 @@ class Form {
         clickedQuestion.classList.add("completed")        
       }
     }
+    
 
-    if (groupIndex + 1 >= questionsNumber) {
+    if (groupIndex + 1 >= totalQuestionsNumber && this.#currentProps.filledQuestions < totalQuestionsNumber ) {
       console.log(`formType: ${formName} last-question-clicked !`);
       document.querySelector(`form.${formName}`).classList.add("last-question-clicked");
       document.querySelector("#results-table > p").textContent = "Nie wypełniono wszystkich pytań, sprawdź arkusz"
@@ -331,12 +332,11 @@ class Form {
   static Interprete() {
     // TODO connect with table
     console.log("I'm interpreting test now..");
+    
     // const testSolver = new TestSolver(this.#formValues, this.properties)
-
-    // console.log(testSolver.scalesRaw);
-    // console.log(testSolver.standardizedResults);
-    // console.log(testSolver.allClassificationResults);
-    Results.CreateResultsTable(this.#formValues, this.properties)
+    const testSolver = new TestSolver(this.#formValues, this.properties);
+    
+    Results.DisplayResults(testSolver)
     this.#approachNumber++ 
   }
 }

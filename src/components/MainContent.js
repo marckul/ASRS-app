@@ -249,7 +249,19 @@ const MainContent = () => {
       <!-- <div id="results-table-mockup" class="test-results">
         ${ResultsTableMockup()}
       </div> -->
+
+      <div class="test-results">
+        <div id="asrs-plots--raw"></div>
+        <div id="asrs-plots--standardized"></div>
+        <img id="jpg-export"></img>
+
+        <div id="asrs-plots--plot2"></div>
+        <div id="asrs-plots--plot-mockup"></div>
+      </div>
+
+      
     </div>
+
     
 
   </section>
