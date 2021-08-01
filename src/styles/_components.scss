@@ -6,25 +6,97 @@ $markul-color-navActiveLight-pure: #00d0ff;
 $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
 .sidebar {
   position: fixed;
-  z-index: 100;
-  top: 0;
+  z-index: 500;
+  top: 60px;
   left: 0;
   bottom: 0;
+  overflow-y: auto;
   background-color: $markul-color-sidebar;
-  // border-right: solid .1rem $markul-color-primaryLight;
-  padding-top: 56px;
+
   .accordion-item, .accordion-header, .accordion-button {
     background: transparent !important;
     color: inherit;
   }
   .accordion-button:not(.collapsed) {
     box-shadow: none !important;
+  }  
+}
+
+
+// SIDEBAR COLLAPSING
+
+
+
+$collapseBreakpoint: ($largeScreenSize - 1);
+.sidebar {
+  
+  #asrs-logo {
+    position: relative;
+  }
+
+  .sidebar-collapse-button {
+    display: none;
+    padding: 1em;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  @media (max-width: $collapseBreakpoint) {
+    transition: left .8s !important;
+    $sidebarWidth: 25em;
+    max-width: $sidebarWidth;
+
+    .sidebar-collapse-button {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }    
+    &.collapsed {
+      transition: left 1.1s !important;
+      left: -($sidebarWidth*1.2);
+
+
+
+
+    }
+  }
+}
+
+
+
+.sidebar-show-button {
+  display: none;
+  @media (max-width: $collapseBreakpoint) {
+    display: inline-block;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+
+    transition-property: opacity, visibility;//, display 0s 5s;
+    transition-duration: 1s;
+
+    &.show {
+      opacity: 0;
+      // display: none;
+      visibility: hidden;
+    }
   }
 }
 
 
 #test-properties {
+  /*
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow-y: scroll;
+  */
+  
   background-color: transparent;
+
   .title {
     color: $markul-color-primaryDark;
     margin-top: 3rem;
@@ -35,13 +107,11 @@ $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
     text-transform: uppercase;
     font-size: 1em;
   }
-
   .accordion-button, h4 {
     &:hover {
       color: $markul-color-primaryDark-hover;
     }
   }
-  
 }
 
 
@@ -65,6 +135,53 @@ $markul-color-sidebar: white;// $markul-color-grey;// #edf1f5;//
 #test {
   min-height: 173em;
 }
+
+
+
+.asrs-form-container, .results-container { //.results-table-container
+  p {
+    text-align: left;
+  }
+  // margin-bottom: 10em;
+
+
+
+
+
+
+}
+@media screen and (max-width: $collapseBreakpoint) {
+  .asrs-form-container, .results-container {
+    // margin: 0;  
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100%;
+  }    
+}
+
+@media screen and (max-width: $smallScreenSize) {
+  .asrs-form-container { 
+    padding: 3em !important;
+  }
+  .results-container {
+    padding: 0 !important;
+  }
+  .results-table-container { 
+    padding: 1em !important;
+  }
+
+  .asrs-form-list {
+    padding-left: 1em;
+    padding-right: 0;
+    margin-left: auto;
+    .asrs-form-li {
+      margin-left: auto;
+    }
+  }
+  
+}
+
+
 
 form.asrs-form {
   position: relative;
@@ -99,40 +216,10 @@ $markul-color-group-hover: $markul-color-navActiveLight-pure;
   max-width: max-content;
   min-width: max-content;
   margin-left: auto;
-  // &:focus, &:active, &:hover, &:target {    
-  // $markul-color-navActiveLight-pure:;
 
-  // &:hover {    
-  //   $markul-color-radio-group: $markul-color-navActiveLight-pure;
-  //   .my-radio-button label {
-  //     color: $markul-color-radio-group;
-  //   }
-  //   .my-radio-button label:before {
-  //     border: 2px solid  $markul-color-radio-group;
-  //   }
-  // }
-
-  // &.radio-group-active {    
-  //   $markul-color-radio-group: $markul-color-navActiveLight-pure;
-  //   .my-radio-button label {
-  //     color: $markul-color-radio-group;
-  //     &:before {
-  //       border: 2px solid  $markul-color-radio-group;
-  //     }
-  //   }
-  //   .my-radio-button input:checked { // [type=radio]
-  //     + label {
-  //       font-weight: bold;
-  //       color: $markul-color-radio-group;
-  //       &:after {
-  //         background: $markul-color-radio-group;
-  //       }    
-  //       &:before {
-  //         border: 2px solid $markul-color-radio-group;
-  //       }
-  //     }  
-  //   }
-  // }
+  @media screen and (max-width: $collapseBreakpoint) {
+    margin-left: 0;
+  }
 
 }
 
@@ -225,46 +312,6 @@ $color-labelButtonChecked: $markul-color-navActive;// rgb(27, 94, 0);
     }
   }
 
-  // &:hover {
-  //   $markul-color-radio-hover: $markul-color-navActiveLight-pure;
-  //   label {
-  //     color: $markul-color-radio-hover;
-  //     // font-weight: normal;
-  //     &:before {
-  //       // content: " ";
-  //       // display: inline-block;
-  //       // position: relative;
-  //       // top: 5px;
-  //       // margin: 0 5px 0 0;
-  //       // width: 20px;
-  //       // height: 20px;
-  //       // border-radius: 11px;
-  //       border: 2px solid  $markul-color-radio-hover;
-  //       // background-color: transparent;
-  //     }
-  //   }
-  
-  //   input:checked { // [type=radio]
-  //     + label {
-  //       color: $color-labelButtonChecked;
-  //       // font-weight: bold;
-  //       &:after {
-  //         // border-radius: 11px;
-  //         // width: 12px;
-  //         // height: 12px;
-  //         // position: absolute;
-  //         // top: 9px;
-  //         // left: 10px;
-  //         // content: " ";
-  //         // display: block;
-  //         background: $color-radioButtonChecked;
-  //       }    
-  //       &:before {
-  //         border: 2px solid $color-radioButtonChecked;
-  //       }
-  //     }  
-  //   }
-  // }
 
 }
 
@@ -347,7 +394,10 @@ $markul-color-radio-active: ($markul-color-green + $markul-color-navActiveLight-
 ==================== */ 
 
 .asrs-question {
+  text-align: left;
   min-width: max-content;
+  max-width: 100%;
+  
 }
 
 .completion-icon {

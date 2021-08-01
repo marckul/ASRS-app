@@ -25,6 +25,7 @@ import {ALL_SCALES_INDEXES, REVERSE} from './app-data/test-solver-data'
 
 /**
  * @alias testSolver
+ * @type { TestSolver }
  */
 class TestSolver {
   /** TestSolver returns new testSolver instance with solved test results. 

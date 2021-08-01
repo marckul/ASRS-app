@@ -1,5 +1,7 @@
 import {html, render} from "lit-html"
 import TestSolver from "../TestSolver"
+import * as Plots from "./Plots"
+
 
 
 // results-table
@@ -120,28 +122,57 @@ const RowsGroup = (typeName, testSolver, typeScalesNames) => {
 }
 
 
-const ResultsTable = (formValues, properties) => {
-  let scalesTypes = {
-    asrsScales: [],
-    clinicalScales: [],
-    terapeuticScales: [],
-  }  
-
-  const testSolver = new TestSolver(formValues, properties);
-  
-  if (properties.formType === "form70") {
-    scalesTypes.asrsScales = ["RSK", "NZ"]
-    scalesTypes.clinicalScales = ["WO", "DSM"]
-    scalesTypes.terapeuticScales = ["RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
-  } 
-  else if (properties.formType === "form71") {
-    scalesTypes.asrsScales = ["RSK", "NZ", "SR"]
-    scalesTypes.clinicalScales = ["WO", "DSM"]
-    scalesTypes.terapeuticScales = ["RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "UW"]
-  } 
-  else {
-    throw Error("formType should be form70 or form71")
+const ResultsTestProps = {
+  form70: {
+    scalesTypes: {
+      asrsScales: ["RSK", "NZ"],
+      clinicalScales: ["WO", "DSM"],
+      terapeuticScales: ["RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
+    },
+    allScales: ["RSK", "NZ", "WO", "DSM", "RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"],
+  },
+  form71: {
+    scalesTypes: {
+      asrsScales: ["RSK", "NZ", "SR"],
+      clinicalScales: ["WO", "DSM"],
+      terapeuticScales: ["RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "UW"],
+    },
+    allScales: ["RSK", "NZ", "SR", "WO", "DSM", "RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "UW"],
+  },
+  fillingPerson: {
+    parent: "Rodzic",
+    teacher: "Opiekun"
   }
+}
+
+/**
+ * @param { TestSolver } testSolver 
+ */
+const ResultsTable = (testSolver) => {
+  
+  // let scalesTypes = {
+  //   asrsScales: [],
+  //   clinicalScales: [],
+  //   terapeuticScales: [],
+  // }  
+
+  // const testSolver = new TestSolver(formValues, properties);
+  const properties = testSolver.properties
+  const scalesTypes = ResultsTestProps[properties.formType].scalesTypes
+  
+  // if (properties.formType === "form70") {
+  //   scalesTypes.asrsScales = ["RSK", "NZ"]
+  //   scalesTypes.clinicalScales = ["WO", "DSM"]
+  //   scalesTypes.terapeuticScales = ["RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "US"]
+  // } 
+  // else if (properties.formType === "form71") {
+  //   scalesTypes.asrsScales = ["RSK", "NZ", "SR"]
+  //   scalesTypes.clinicalScales = ["WO", "DSM"]
+  //   scalesTypes.terapeuticScales = ["RR", "RD", "WSE", "NJ", "ST", "SZ", "WS", "UW"]
+  // } 
+  // else {
+  //   throw Error("formType should be form70 or form71")
+  // }
   const fillingPerson = {
     parent: "Rodzic",
     teacher: "Opiekun"
@@ -166,14 +197,20 @@ const ResultsTable = (formValues, properties) => {
 }
 
 
-const CreateResultsTable = (formValues, properties) => {
+/**
+ * @param { TestSolver } testSolver 
+ */
+const DisplayResults = (testSolver) => {
+  render(ResultsTable(testSolver), document.getElementById("results-table"))
   
-  
-  render(ResultsTable(formValues, properties), document.getElementById("results-table"))
+  Plots.RenderPlot(
+    testSolver, 
+    ResultsTestProps, 
+  );
   
 }
 
-const DeleteResultsTable = (clearType) => {
+const DeleteResults = (clearType) => {
   let template = null;
   if (clearType === "formCleared") {
     template = html`
@@ -185,8 +222,12 @@ const DeleteResultsTable = (clearType) => {
       <p class="fst-italic fs-5">Kiedy wypełnisz formularz, wyniki pojawią się tutaj</p>
     `
   }
+
+  document.getElementById("asrs-plots--standardized").innerHTML = ""
   
   render(template, document.getElementById("results-table"))
 }
 
-export { ResultsTable, CreateResultsTable, ResultsTableMockup, DeleteResultsTable}
+
+
+export { ResultsTable, DisplayResults, ResultsTableMockup, DeleteResults as DeleteResultsTable, ResultsTestProps}

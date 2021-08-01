@@ -1,4 +1,7 @@
 import { html, render } from 'lit-html'
+import TestSolver from "../TestSolver"
+import { ResultsTestProps } from "./Results"
+
 const Plotly = require('../../node_modules/plotly.js-dist/plotly');
 
 
@@ -10,62 +13,169 @@ const Plot1 = () => {
 
 }
 
-const PlotsRender = () => {
+/**
+ * @param { TestSolver } testSolver 
+ * @param { object } plotProps - plot properties
+ * @param { string } plotProps.plotContainerID
+ * @param { string } plotProps.title
+ */
 
-  var trace1 = {
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [20, 14, 23],
-    name: 'SF Zoo',
-    type: 'bar'
+/**
+ * 
+ * @param { TestSolver } testSolver 
+ * @param { ResultsTestProps } resultsTestProps
+ */
+const RenderPlot = (testSolver, resultsTestProps) => {  
+    const plotContainerID = "asrs-plots--standardized";
+    const allScalesResults = testSolver.allStandardizedResults;
+    const scalesNames = resultsTestProps[testSolver.properties.formType].allScales;
+
+    const fillingPerson = resultsTestProps.fillingPerson[testSolver.properties.fillingPerson]
+    const testVariant = `${testSolver.properties.ageGroup} ${fillingPerson}`;
+    const plotTitle = `Wyniki Ustandaryzowane ${testVariant}`.toLocaleUpperCase()
+
+    const dataY1 = [];
+    for (let i = 0; i < scalesNames.length; i++) {
+      const scaleName = scalesNames[i];
+      if (Object.hasOwnProperty.call(allScalesResults, scaleName)) {
+        dataY1.push(allScalesResults[scaleName]);
+      }
+    }
+    
+    const colorReversed = dataY1.map( value => {
+      return 81 - value;
+    })
+    
+    const DATA = [{
+      x: scalesNames,  y: dataY1,
+      type: 'bar',
+      name: testVariant,
+      marker: {
+        color: colorReversed,
+        colorscale: 'YlGnBu',
+        opacity: .7,
+        line: {
+          color: "rgb(0,0,0)",
+          opacity: 1,
+          width: 1
+        }
+      },
+    }];
+    
+    const layout = {
+      title: plotTitle,
+      barmode: 'stack',
+      yaxis: {
+        range: ['0', '85'],
+        type: 'number'
+      },
+    };
+    
+    const currentDate = new Date();
+    const dateStr =  `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDay()}`
+    let config = {
+      responsive: true,
+      editable: true,
+      toImageButtonOptions: {
+        format: 'png', // one of png, svg, jpeg, webp
+        filename: `${testVariant} ${dateStr}`,
+        scale: 1.5 // Multiply title/legend/axis/canvas sizes by this factor
+      }
+    }
+
+    
+
+    Plotly.newPlot(plotContainerID, DATA, layout, config);
+}
+
+
+const BarplotsRenderMockup = (dataX, dataY) => {
+
+  // tak też można ustawić kolor
+  let trace0 = {
+    x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+    y: [20, 14, 25, 16, 18, 22, 19, 15, 12, 16, 14, 17, 19],
+    type: 'bar',
+    name: 'Primary Product',
+    marker: {
+      color: ['rgb(50,255,255)', 'rgb(255,255,50)', 'rgb(50,255,255)', 
+              'rgb(50,255,255)', 'rgb(50,255,255)', 'rgb(50,255,255)', 
+              'rgb(50,255,255)', 'rgb(50,255,255)', 'rgb(50,255,255)', 
+              'rgb(50,255,255)', 'rgb(50,255,255)', 'rgb(50,255,255)', 
+              'rgb(50,255,255)'],
+      opacity: .5
+    }
   };
 
-  var trace2 = {
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [12, 18, 29],
-    name: 'LA Zoo',
-    type: 'bar'
+  const dataY1 = [20, 14, 25, 16, 18, 22, 19, 15, 12, 16, 14, 17, 5];
+
+  let trace1 = {
+    x: ['krzesła', 'stoły', 'łyżki', 'koty', 'psoty', 'kalosze', 'gringi', 'musztarda', 'foo', 'fighters', 'łyżeczki', 'kanapki', 'rosoły'],
+    y: dataY1,
+    type: 'bar',
+    name: 'Primary Product',
+    marker: {
+      color: dataY1,
+      colorscale: 'YlGnBu',
+      opacity: .7,
+      line: {
+        color: "rgb(0,0,0)",
+        opacity: 1,
+        width: 1
+      }
+    }
+    // reversescale: true
+  };
+  
+  let trace2 = {
+    x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+    y: [20, 14, 25, 16, 18, 22, 19, 15, 12, 16, 14, 17, 19],
+    type: 'bar',
+    name: 'Primary Product',
+    marker: {
+      color: [20, 14, 25, 16, 18, 22, 19, 15, 12, 16, 14, 17, 19],
+      colorscale: 'Viridis',
+      opacity: .75
+    }
   };
 
-  var data = [trace1];
-  var layout = {barmode: 'stack'};
+  // var trace2 = {
+  //   x: ['giraffes', 'orangutans', 'monkeys'],
+  //   y: [12, 18, 29],
+  //   name: 'LA Zoo',
+  //   type: 'bar'
+  // };
 
-  const plotsContainer = document.getElementsByClassName('plot1')
-  var config = {responsive: true}
+  let layout = {
+    title: "Tutaj Będzie Tytuł",
+    barmode: 'stack',
+    yaxis: {
+      range: ['0', '30'],
+      type: 'number'
+    },
+  };
+  let data1 = [trace1];
 
-  Plotly.newPlot('asrs-plots--plot1', data, layout, config);
-  Plotly.newPlot('asrs-plots--plot2', data, layout, config);
+  const currentDate = new Date()
+  const dateStr =  `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDay()}`
+  
+  let config = {
+    responsive: true,
+    editable: true,
+    toImageButtonOptions: {
+      format: 'png', // one of png, svg, jpeg, webp
+      filename: `Nazwa Wykresu ${dateStr}`,
+      scale: 1.5 // Multiply title/legend/axis/canvas sizes by this factor
+    }
+  }
+
+  Plotly.newPlot('asrs-plots--plot-mockup', data1, layout, config);
+
+  // let data2 = [trace2];
+  // Plotly.newPlot('asrs-plots--plot2', data2, layout, config);
   
 
 }
 
 
-const PlotsRenderMockup = () => {
-
-  var trace1 = {
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [20, 14, 23],
-    name: 'SF Zoo',
-    type: 'bar'
-  };
-
-  var trace2 = {
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [12, 18, 29],
-    name: 'LA Zoo',
-    type: 'bar'
-  };
-
-  var data = [trace1];
-  var layout = {barmode: 'stack'};
-
-  const plotsContainer = document.getElementsByClassName('plot1')
-  var config = {responsive: true}
-
-  Plotly.newPlot('asrs-plots--plot1', data, layout, config);
-  Plotly.newPlot('asrs-plots--plot2', data, layout, config);
-  
-
-}
-
-
-export {Plot1, PlotsRenderMockup, PlotsRender}
+export {Plot1, BarplotsRenderMockup, RenderPlot}
